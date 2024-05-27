@@ -1,0 +1,35 @@
+import type { ISimpleSelectOption } from "@/library/simpSelect/simpSelect.types";
+import type { Component, Ref } from "vue";
+export type setIsLocalOpenType = (isOpen?: boolean) => void;
+export type setToggleOptionType = (item: ISimpleSelectOption) => void;
+type updateOutsideModelsTypeProps = "ok" | "clickOutside" | "onBeforeMount" | "mainWatch" | "other";
+export type updateOutsideModelsType = (type: updateOutsideModelsTypeProps) => void;
+export interface ILocalStoreStore {
+    isLocalOpen: Ref<boolean>;
+    setIsLocalOpen: setIsLocalOpenType;
+    localSelectedFull: Ref<ISimpleSelectOption[]>;
+    $wrapper: Ref<HTMLDivElement | null>;
+    searchText: Ref<string>;
+    setSearchText: (str?: string) => void;
+    titleText: Ref<ITitleResult>;
+    setTitleText: (data: ITitleResult) => void;
+    getSelected: (item: ISimpleSelectOption) => boolean;
+    setToggleOption: setToggleOptionType;
+    updateOutsideModels: updateOutsideModelsType;
+    resetSelectedByDontConfirm: () => void;
+    resetAll: (isConfirm: boolean) => void;
+    selectAll: (isConfirm: boolean) => void;
+    componentItemList: Component;
+    componentTitle: Component;
+    componentBottomControl: Component;
+    componentBottomControlOk: Component;
+    componentBottomControlNo: Component;
+    componentSelectAllControls: Component;
+    componentSelectAllControlsSelect: Component;
+    componentSelectAllControlsReset: Component;
+}
+export interface ITitleResult {
+    fullString: string;
+    result: string;
+}
+export {};
