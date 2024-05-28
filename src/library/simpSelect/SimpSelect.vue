@@ -5,13 +5,11 @@
     ISimpleSelected,
     ISimpleSelectLocale,
     ISimpleSelectOption,
-    ISimpleSelectOptionGroup, optionsItemsType,
+    optionsItemsType,
   } from './simpSelect.types';
   import { simpleSelectLocale } from "@/library/simpSelect/simpSelect.consts";
   import {
-    cloneModelValue,
-    cloneObj,
-    deepEqual, equalModels,
+    equalModels,
     getClass,
     transformOptionWithGroup,
   } from '@/library/simpSelect/simpSelect.utils';
@@ -164,7 +162,7 @@
     model,
     () => {
       if (!equalModels(model.value, localSelected.value, props.keyValue)) {
-        localSelected.value = cloneModelValue(model.value);
+        localSelected.value = model.value;
       }
     },
     { immediate: true, deep: true },
@@ -267,13 +265,15 @@
   );
 
   const updateOutsideModelsSelected = () => {
-    model.value = cloneModelValue(localSelected.value);
+    if (!equalModels(model.value, localSelected.value, props.keyValue)) {
+      model.value = localSelected.value;
+    }
   };
   const updateOutsideModels: updateOutsideModelsType = () => {
     updateOutsideModelsSelected();
   };
   const resetSelectedByDontConfirm = () => {
-    localSelected.value = cloneModelValue(model.value);
+    localSelected.value = model.value;
   };
 
   const resetAll = (isConfirm: boolean) => {

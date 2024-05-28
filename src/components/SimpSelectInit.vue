@@ -3,8 +3,6 @@
   import { ref, watch } from "vue";
   import SettingToggleItem from "./SettingToggleItem.vue";
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
   const initIsMobile = () => {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   };
@@ -38,7 +36,6 @@
     }
   });
   const settingDisabled = ref(false);
-  // const setting_ = ref(false);
   const setting_countShowSelected = ref(3);
   const isNative = ref(initIsMobile());
   const isFloat = ref(isFloatSet());
@@ -205,7 +202,7 @@
 :key-value="'value_id'"
 :key-title="'name_title'"</pre
       >
-      <SimpSelect :options="optionsCustomKeys" :key-value="'value_id'" :key-title="'name_title'" :is-up="true" />
+<!--      <SimpSelect :options="optionsCustomKeys" :key-value="'value_id'" :key-title="'name_title'" :is-up="true" />-->
     </div>
   </div>
 </template>

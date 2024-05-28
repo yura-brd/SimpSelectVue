@@ -16,12 +16,6 @@ const getClass = (cls, mod = false, classInit = initClass) => {
   const sep = mod ? "--" : "__";
   return `${classInit}${sep}${cls}`;
 };
-const cloneModelValue = (val) => {
-  if (typeof val === "string" || typeof val === "number") {
-    return val;
-  }
-  return cloneObj(val);
-};
 const cloneObj = (obj) => {
   return JSON.parse(JSON.stringify(obj));
 };
@@ -901,7 +895,7 @@ const _sfc_main = defineComponent({
       model,
       () => {
         if (!equalModels(model.value, localSelected.value, props.keyValue)) {
-          localSelected.value = cloneModelValue(model.value);
+          localSelected.value = model.value;
         }
       },
       { immediate: true, deep: true }
@@ -962,13 +956,15 @@ const _sfc_main = defineComponent({
       }
     );
     const updateOutsideModelsSelected = () => {
-      model.value = cloneModelValue(localSelected.value);
+      if (!equalModels(model.value, localSelected.value, props.keyValue)) {
+        model.value = localSelected.value;
+      }
     };
     const updateOutsideModels = () => {
       updateOutsideModelsSelected();
     };
     const resetSelectedByDontConfirm = () => {
-      localSelected.value = cloneModelValue(model.value);
+      localSelected.value = model.value;
     };
     const resetAll = (isConfirm) => {
       localSelected.value = props.multiple ? [] : null;

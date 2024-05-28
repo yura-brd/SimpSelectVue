@@ -11,7 +11,7 @@ export const getClass = (cls: string, mod = false, classInit = initClass): strin
 };
 
 export const cloneModelValue = (val: ISimpleSelected): ISimpleSelected => {
-  if (typeof val === "string" || typeof val === "number") {
+  if (!val) {
     return val;
   }
   return cloneObj(val);
