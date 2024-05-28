@@ -1,4 +1,4 @@
-import type { ISimpleSelectLocale, optionsItemsType } from './simpSelect.types';
+import type { ISimpleSelectLocale, optionsItemsType } from "./simpSelect.types";
 import type { setIsLocalOpenType } from "@/library/simpSelect/simpSelect.local.types";
 export interface ISimpleSelectProps {
     options: optionsItemsType;

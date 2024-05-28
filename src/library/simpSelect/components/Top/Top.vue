@@ -3,9 +3,9 @@
 
   import { computed, inject } from "vue";
   import { keyInjectLocalStore, keyInjectPropsAll } from "@/library/simpSelect/simpSelect.keys";
-  import type { ISimpleSelectProps } from "@/library/simpSelect/SimpSelect.vue";
+  import type { ISimpleSelectProps } from "../../SimpSelect.vue";
   import Search from "../Search.vue";
-  import type { ILocalStoreStore, ITitleResult } from "@/library/simpSelect/simpSelect.local.types";
+  import type { ILocalStoreStore, ITitleResult } from "../../simpSelect.local.types";
   // export interface IProps {}
 
   defineEmits(["setIsLocalOpen"]);
@@ -56,9 +56,6 @@
       resTitle.result = localStore.localSelected.value[initAllProps!.keyTitle as string];
     }
 
-
-
-
     localStore.setTitleText(resTitle);
     return resTitle;
   });
@@ -77,7 +74,7 @@
         :is="localStore!.componentTitle"
         :locale="initAllProps!.locale"
         :local-selected="localStore!.localSelected.value"
-        :titleRes="titleRes"
+        :title-res="titleRes"
         :count-show-selected="initAllProps?.countShowSelected"
         :is-only-placeholder="initAllProps?.isOnlyPlaceholder"
         :sep-chars="initAllProps!.sepChars"

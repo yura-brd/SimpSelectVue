@@ -1,9 +1,9 @@
 <script setup lang="ts">
   import { defineModel, inject } from "vue";
   import { keyInjectLocalStore, keyInjectPropsAll } from "@/library/simpSelect/simpSelect.keys";
-  import type { ILocalStoreStore } from "@/library/simpSelect/simpSelect.local.types";
+  import type { ILocalStoreStore } from "../simpSelect.local.types";
   import type { ISimpleSelectProps } from "@/library/simpSelect/SimpSelect.vue";
-  import type { ISimpleSelected, ISimpleSelectOption } from "@/library/simpSelect/simpSelect.types";
+  import type { ISimpleSelected, ISimpleSelectOption } from "../simpSelect.types";
   import { getClass } from "@/library/simpSelect/simpSelect.utils";
 
   const emits = defineEmits(["changeHandler"]);

@@ -1,4 +1,4 @@
-import type { ISimpleSelectLocale } from "@/library/simpSelect/simpSelect.types";
+import type { ISimpleSelectLocale } from "./simpSelect.types";
 
 export const simpleSelectLocale: ISimpleSelectLocale = {
   noSearch: "No matches for",

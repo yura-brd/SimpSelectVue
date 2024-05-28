@@ -1,4 +1,4 @@
-import SimpSelect from "@/library/simpSelect/SimpSelect.vue";
+import SimpSelect from "./simpSelect/SimpSelect.vue";
 
 const useSelect = {
   install: function (app: { component: (a: string, b: unknown) => void }) {

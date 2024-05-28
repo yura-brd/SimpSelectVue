@@ -1,4 +1,4 @@
-import type { ISimpleSelectLocale } from "@/library/simpSelect/simpSelect.types";
+import type { ISimpleSelectLocale } from "./simpSelect.types";
 export declare const simpleSelectLocale: ISimpleSelectLocale;
 export declare const nameSelect = "SimpSelect";
 export declare const nameMark: string;

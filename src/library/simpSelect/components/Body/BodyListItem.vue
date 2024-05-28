@@ -3,7 +3,7 @@
   import { getClass } from "@/library/simpSelect/simpSelect.utils";
   import { inject } from "vue";
   import { keyInjectPropsAll } from "@/library/simpSelect/simpSelect.keys";
-  import type { ISimpleSelectProps } from "@/library/simpSelect/SimpSelect.vue";
+  import type { ISimpleSelectProps } from "../../SimpSelect.vue";
 
   interface IProps {
     item: ISimpleSelectOption;

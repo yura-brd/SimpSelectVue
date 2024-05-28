@@ -1,4 +1,4 @@
-import type { ISimpleSelected, ISimpleSelectOption, ISimpleSelectOptionGroup } from "@/library/simpSelect/simpSelect.types";
+import type { ISimpleSelected, ISimpleSelectOption, ISimpleSelectOptionGroup } from "./simpSelect.types";
 export declare const getClass: (cls: string, mod?: boolean, classInit?: string) => string;
 export declare const cloneModelValue: (val: ISimpleSelected) => ISimpleSelected;
 export declare const cloneObj: <T>(obj: T) => T;

@@ -1,4 +1,4 @@
-import type { ISimpleSelected, ISimpleSelectLocale, optionsItemsType } from '@/library/simpSelect/simpSelect.types';
+import type { ISimpleSelected, ISimpleSelectLocale, optionsItemsType } from "../../simpSelect.types";
 export interface IPropsSimpSelectTopTitleLocal {
     locale: ISimpleSelectLocale;
     localSelected: ISimpleSelected;

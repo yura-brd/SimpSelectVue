@@ -1,9 +1,5 @@
-import { initClass } from "@/library/simpSelect/simpSelect.consts";
-import type {
-  ISimpleSelected,
-  ISimpleSelectOption,
-  ISimpleSelectOptionGroup,
-} from "@/library/simpSelect/simpSelect.types";
+import { initClass } from "./simpSelect.consts";
+import type { ISimpleSelected, ISimpleSelectOption, ISimpleSelectOptionGroup } from "./simpSelect.types";
 
 export const getClass = (cls: string, mod = false, classInit = initClass): string => {
   const sep = mod ? "--" : "__";
@@ -29,11 +25,11 @@ export const transformOptionWithGroup = (
     : (cloneObj(options) as ISimpleSelectOption[]);
 };
 
-export const equalModels = (model1:ISimpleSelected, model2: ISimpleSelected, key: string): boolean => {
+export const equalModels = (model1: ISimpleSelected, model2: ISimpleSelected, key: string): boolean => {
   if (!model1 && !model2) {
     return true;
   }
-  if (!model1 && model2 || model1 && !model2) {
+  if ((!model1 && model2) || (model1 && !model2)) {
     return false;
   }
   if (!model1 || !model2) {
@@ -41,21 +37,20 @@ export const equalModels = (model1:ISimpleSelected, model2: ISimpleSelected, key
   }
   const firstIsArray = Array.isArray(model1);
   const secondIsArray = Array.isArray(model2);
-  if (!firstIsArray && secondIsArray || firstIsArray && !secondIsArray) {
+  if ((!firstIsArray && secondIsArray) || (firstIsArray && !secondIsArray)) {
     return false;
   }
 
   if (firstIsArray && secondIsArray) {
-    return compareArrays(model1, model2, key)
+    return compareArrays(model1, model2, key);
   }
   if (!firstIsArray && !secondIsArray) {
     return deepEqual(model1, model2);
   }
 
   return false;
-
-}
-function compareArrays(arr1:ISimpleSelectOption[], arr2:ISimpleSelectOption[], key: string) {
+};
+function compareArrays(arr1: ISimpleSelectOption[], arr2: ISimpleSelectOption[], key: string) {
   // Сортируем массивы по id
   const sortedArr1 = arr1.slice().sort((a, b) => a[key].localeCompare(b[key]));
   const sortedArr2 = arr2.slice().sort((a, b) => a[key].localeCompare(b[key]));
@@ -73,7 +68,7 @@ function compareArrays(arr1:ISimpleSelectOption[], arr2:ISimpleSelectOption[], k
 
   return true;
 }
-export const deepEqual = (object1: Record<string, any>, object2:  Record<string, any>): boolean => {
+export const deepEqual = (object1: Record<string, any>, object2: Record<string, any>): boolean => {
   const keys1 = Object.keys(object1);
   const keys2 = Object.keys(object2);
 

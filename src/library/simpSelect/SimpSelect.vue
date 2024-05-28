@@ -1,19 +1,10 @@
 <script setup lang="ts">
   import { defineModel, provide, readonly, ref, watch, onBeforeMount, nextTick } from "vue";
   import { useSlots } from "vue";
-  import type {
-    ISimpleSelected,
-    ISimpleSelectLocale,
-    ISimpleSelectOption,
-    optionsItemsType,
-  } from './simpSelect.types';
-  import { simpleSelectLocale } from "@/library/simpSelect/simpSelect.consts";
-  import {
-    equalModels,
-    getClass,
-    transformOptionWithGroup,
-  } from '@/library/simpSelect/simpSelect.utils';
-  import Top from "@/library/simpSelect/components/Top/Top.vue";
+  import type { ISimpleSelected, ISimpleSelectLocale, ISimpleSelectOption, optionsItemsType } from "./simpSelect.types";
+  import { simpleSelectLocale } from "./simpSelect.consts";
+  import { equalModels, getClass, transformOptionWithGroup } from "./simpSelect.utils";
+  import Top from "./components/Top/Top.vue";
   import type {
     ILocalStoreStore,
     ITitleResult,
@@ -200,16 +191,20 @@
   const changeHandler = (e: Event) => {
     const target = e.target as HTMLSelectElement;
     if (props.multiple) {
-      const optionsRes:string[] = [];
+      const optionsRes: string[] = [];
       for (let i = 0; i < target.options.length; i++) {
         const option = target.options[i];
         if (option.selected) {
           optionsRes.push(option.value);
         }
       }
-      localSelected.value = transformOptionWithGroup(props.options).filter(optionItem => optionsRes.includes(optionItem[props.keyValue]));
+      localSelected.value = transformOptionWithGroup(props.options).filter(optionItem =>
+        optionsRes.includes(optionItem[props.keyValue]),
+      );
     } else {
-      localSelected.value =  transformOptionWithGroup(props.options).filter(optionItem => optionItem[props.keyValue] === target.value );
+      localSelected.value = transformOptionWithGroup(props.options).filter(
+        optionItem => optionItem[props.keyValue] === target.value,
+      );
     }
     nextTick(() => {
       updateOutsideModels("other");
@@ -218,14 +213,14 @@
   const setToggleOption: setToggleOptionType = (item: ISimpleSelectOption) => {
     // if select single, set single value
     if (!props.multiple) {
-      localSelected.value = item
+      localSelected.value = item;
       return;
     }
 
     // multiselect
     // if nothing selected
     if (!localSelected.value || (Array.isArray(localSelected.value) && !localSelected.value.length)) {
-      localSelected.value = [ item ];
+      localSelected.value = [item];
       return;
     }
     if (!Array.isArray(localSelected.value)) {
@@ -236,15 +231,18 @@
       }
     }
 
-    const index:boolean = localSelected.value.some((itemOption: ISimpleSelectOption) => item[props.keyValue] === itemOption[props.keyValue]);
+    const index: boolean = localSelected.value.some(
+      (itemOption: ISimpleSelectOption) => item[props.keyValue] === itemOption[props.keyValue],
+    );
 
     if (index) {
-      (localSelected.value as ISimpleSelectOption[]) = localSelected.value.filter((itemOption: ISimpleSelectOption) => item[props.keyValue] !== itemOption[props.keyValue]);
+      (localSelected.value as ISimpleSelectOption[]) = localSelected.value.filter(
+        (itemOption: ISimpleSelectOption) => item[props.keyValue] !== itemOption[props.keyValue],
+      );
     } else {
       (localSelected.value as ISimpleSelectOption[]).push(item);
     }
   };
-
 
   onBeforeMount(() => {
     // updateLocalSelectedFull(localSelected.value);

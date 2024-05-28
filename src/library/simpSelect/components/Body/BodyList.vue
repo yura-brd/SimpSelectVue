@@ -2,9 +2,9 @@
   import { getClass, transformOptionWithGroup } from "@/library/simpSelect/simpSelect.utils";
   import { computed, type ComputedRef, inject, ref, watch } from "vue";
   import { keyInjectLocalStore, keyInjectPropsAll } from "@/library/simpSelect/simpSelect.keys";
-  import type { ISimpleSelectOption, ISimpleSelectOptionGroup } from "@/library/simpSelect/simpSelect.types";
-  import type { ISimpleSelectProps } from "@/library/simpSelect/SimpSelect.vue";
-  import type { ILocalStoreStore } from "@/library/simpSelect/simpSelect.local.types";
+  import type { ISimpleSelectOption, ISimpleSelectOptionGroup } from "../../simpSelect.types";
+  import type { ISimpleSelectProps } from "../../SimpSelect.vue";
+  import type { ILocalStoreStore } from "../../simpSelect.local.types";
 
   const initAllProps = inject<ISimpleSelectProps>(keyInjectPropsAll);
 

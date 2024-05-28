@@ -1,12 +1,7 @@
 <script setup lang="ts">
-import type {
-  ISimpleSelected,
-  ISimpleSelectLocale,
-  optionsItemsType
-} from '@/library/simpSelect/simpSelect.types';
-import { getClass, transformOptionWithGroup } from '@/library/simpSelect/simpSelect.utils';
+  import type { ISimpleSelected, ISimpleSelectLocale, optionsItemsType } from "../../simpSelect.types";
+  import { getClass, transformOptionWithGroup } from "@/library/simpSelect/simpSelect.utils";
   import { computed } from "vue";
-
 
   export interface IPropsSimpSelectTopTitleLocal {
     locale: ISimpleSelectLocale;
@@ -27,7 +22,7 @@ import { getClass, transformOptionWithGroup } from '@/library/simpSelect/simpSel
       placeholder: false,
       fill: false,
       full: false,
-    }
+    };
     const itemsOptions = transformOptionWithGroup(props.options);
     if (!props.localSelected || (Array.isArray(props.localSelected) && !props.localSelected.length)) {
       res.placeholder = true;
@@ -38,7 +33,7 @@ import { getClass, transformOptionWithGroup } from '@/library/simpSelect/simpSel
       res.full = true;
     }
     return res;
-  })
+  });
 </script>
 
 <template>

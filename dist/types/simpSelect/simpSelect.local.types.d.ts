@@ -1,4 +1,4 @@
-import type { ISimpleSelected, ISimpleSelectOption } from '@/library/simpSelect/simpSelect.types';
+import type { ISimpleSelected, ISimpleSelectOption } from "./simpSelect.types";
 import type { Component, Ref } from "vue";
 export type setIsLocalOpenType = (isOpen?: boolean) => void;
 export type setToggleOptionType = (item: ISimpleSelectOption) => void;

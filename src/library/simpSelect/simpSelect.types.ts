@@ -1,6 +1,6 @@
 // import type { Ref } from "vue";
 
-import type { IPropsSimpSelectTopTitleLocal } from "@/library/simpSelect/components/Top/TopTitle.vue";
+import type { IPropsSimpSelectTopTitleLocal } from "./components/Top/TopTitle.vue";
 
 export interface ISimpleSelectLocale {
   empty: string;
@@ -23,7 +23,6 @@ export type optionsItemsType = ISimpleSelectOption[] | ISimpleSelectOptionGroup[
 // export type ISimpleSelectedOld = ISimpleSelectedMulti | ISimpleSelectedSingle;
 export type ISimpleSelected = ISimpleSelectOption[] | ISimpleSelectOption | null;
 
-
 export interface ISimpleSelectOptionGroup {
   label: string;
   isOptgroupSelect: boolean;
@@ -32,8 +31,8 @@ export interface ISimpleSelectOptionGroup {
 }
 export interface ISimpleSelectOption {
   // id: string | number;
-  value: string | number;
-  name: string;
+  // value: string | number;
+  // name: string;
   disabled?: boolean;
   [key: string]: any;
 }

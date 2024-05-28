@@ -2,8 +2,8 @@
   import { getClass } from "@/library/simpSelect/simpSelect.utils";
   import { computed, type ComputedRef, inject, ref, watch } from "vue";
   import { keyInjectLocalStore, keyInjectPropsAll } from "@/library/simpSelect/simpSelect.keys";
-  import type { ILocalStoreStore } from "@/library/simpSelect/simpSelect.local.types";
-  import type { ISimpleSelectProps } from "@/library/simpSelect/SimpSelect.vue";
+  import type { ILocalStoreStore } from "../simpSelect.local.types";
+  import type { ISimpleSelectProps } from "../SimpSelect.vue";
 
   export interface IProps {
     searchTypeInput?: string;

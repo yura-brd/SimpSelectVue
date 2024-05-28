@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  import type { ISimpleSelectOption } from "@/library/simpSelect/simpSelect.types";
+  import type { ISimpleSelectOption } from "../../simpSelect.types";
   import { getClass } from "@/library/simpSelect/simpSelect.utils";
   import { inject } from "vue";
   import { keyInjectPropsAll } from "@/library/simpSelect/simpSelect.keys";
-  import type { ISimpleSelectProps } from "@/library/simpSelect/SimpSelect.vue";
+  import type { ISimpleSelectProps } from "../../SimpSelect.vue";
 
   interface IProps {
     item: ISimpleSelectOption;

@@ -214,12 +214,12 @@ const _sfc_main$f = defineComponent({
           (openBlock(), createBlock(resolveDynamicComponent(unref(localStore).componentTitle), {
             locale: unref(initAllProps).locale,
             "local-selected": unref(localStore).localSelected.value,
-            titleRes: titleRes.value,
+            "title-res": titleRes.value,
             "count-show-selected": (_c = unref(initAllProps)) == null ? void 0 : _c.countShowSelected,
             "is-only-placeholder": (_d = unref(initAllProps)) == null ? void 0 : _d.isOnlyPlaceholder,
             "sep-chars": unref(initAllProps).sepChars,
             options: unref(initAllProps).options
-          }, null, 8, ["locale", "local-selected", "titleRes", "count-show-selected", "is-only-placeholder", "sep-chars", "options"])),
+          }, null, 8, ["locale", "local-selected", "title-res", "count-show-selected", "is-only-placeholder", "sep-chars", "options"])),
           !((_e = unref(initAllProps)) == null ? void 0 : _e.isLoading) ? (openBlock(), createBlock(resolveDynamicComponent(unref(localStore).componentArrowIcon), { key: 0 })) : createCommentVNode("", true),
           ((_f = unref(initAllProps)) == null ? void 0 : _f.isLoading) ? (openBlock(), createBlock(resolveDynamicComponent(unref(localStore).componentLoading), { key: 1 })) : createCommentVNode("", true)
         ], 42, _hoisted_1$3)) : createCommentVNode("", true),
@@ -910,9 +910,13 @@ const _sfc_main = defineComponent({
             optionsRes.push(option.value);
           }
         }
-        localSelected.value = transformOptionWithGroup(props.options).filter((optionItem) => optionsRes.includes(optionItem[props.keyValue]));
+        localSelected.value = transformOptionWithGroup(props.options).filter(
+          (optionItem) => optionsRes.includes(optionItem[props.keyValue])
+        );
       } else {
-        localSelected.value = transformOptionWithGroup(props.options).filter((optionItem) => optionItem[props.keyValue] === target.value);
+        localSelected.value = transformOptionWithGroup(props.options).filter(
+          (optionItem) => optionItem[props.keyValue] === target.value
+        );
       }
       nextTick(() => {
         updateOutsideModels();
@@ -934,9 +938,13 @@ const _sfc_main = defineComponent({
           localSelected.value = [];
         }
       }
-      const index = localSelected.value.some((itemOption) => item[props.keyValue] === itemOption[props.keyValue]);
+      const index = localSelected.value.some(
+        (itemOption) => item[props.keyValue] === itemOption[props.keyValue]
+      );
       if (index) {
-        localSelected.value = localSelected.value.filter((itemOption) => item[props.keyValue] !== itemOption[props.keyValue]);
+        localSelected.value = localSelected.value.filter(
+          (itemOption) => item[props.keyValue] !== itemOption[props.keyValue]
+        );
       } else {
         localSelected.value.push(item);
       }

@@ -4,7 +4,7 @@
   import { keyInjectLocalStore, keyInjectPropsAll } from "@/library/simpSelect/simpSelect.keys";
   import type { ISimpleSelectProps } from "@/library/simpSelect/SimpSelect.vue";
   import Search from "@/library/simpSelect/components/Search.vue";
-  import type { ILocalStoreStore } from "@/library/simpSelect/simpSelect.local.types";
+  import type { ILocalStoreStore } from "../../simpSelect.local.types";
   import BodyList from "./BodyList.vue";
 
   const initAllProps = inject<ISimpleSelectProps>(keyInjectPropsAll);
