@@ -1,4 +1,4 @@
-import type { ISimpleSelectOption } from "@/library/simpSelect/simpSelect.types";
+import type { ISimpleSelected, ISimpleSelectOption } from '@/library/simpSelect/simpSelect.types';
 import type { Component, Ref } from "vue";
 
 export type setIsLocalOpenType = (isOpen?: boolean) => void;
@@ -10,7 +10,8 @@ export type updateOutsideModelsType = (type: updateOutsideModelsTypeProps) => vo
 export interface ILocalStoreStore {
   isLocalOpen: Ref<boolean>;
   setIsLocalOpen: setIsLocalOpenType;
-  localSelectedFull: Ref<ISimpleSelectOption[]>;
+  localSelected: Ref<ISimpleSelected>,
+  // localSelectedFull: Ref<ISimpleSelectOption[]>;
   $wrapper: Ref<HTMLDivElement | null>;
   searchText: Ref<string>;
   setSearchText: (str?: string) => void;

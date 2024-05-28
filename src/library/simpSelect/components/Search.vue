@@ -53,7 +53,10 @@
 
   const placeholder: ComputedRef<string> = computed(() => {
     let res = initAllProps?.locale?.searchText || "";
-    if (initAllProps?.isCloneTitleToSearch && localStore?.localSelectedFull.value.length) {
+    if (initAllProps?.isCloneTitleToSearch && localStore?.localSelected.value) {
+      if (Array.isArray(localStore.localSelected.value) && !localStore.localSelected.value.length) {
+        return res;
+      }
       res = localStore.titleText.value.fullString;
     }
     return res;

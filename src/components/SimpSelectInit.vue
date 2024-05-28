@@ -4,7 +4,6 @@
   import SettingToggleItem from "./SettingToggleItem.vue";
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  import type { ISimpleSelectOption } from "@/library/simpSelect/simpSelect.types";
 
   const initIsMobile = () => {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -12,9 +11,9 @@
   const isFloatSet = () => {
     return window.matchMedia(`screen and (max-width: 760px)`).matches;
   };
-  const modelFull = ref();
+  // const modelFull = ref();
 
-  const model = ref<string[] | string>(["1"]);
+  const model = ref<any>({ value: "1", name: "11" });
   const options = ref<any>([
     { value: "1", name: "11" },
     { value: "2", name: "22" },
@@ -34,7 +33,8 @@
   watch(settingMultiple, newVal => {
     if (!newVal) {
       alert("model was reset");
-      model.value = ["1"];
+      // model.value = [{ value_id: "2", name_title: "22" }];
+      model.value = null;
     }
   });
   const settingDisabled = ref(false);
@@ -64,6 +64,7 @@
   const isSearch = ref(true);
   const isSearchInDropdown = ref(false);
   const isCloneTitleToSearch = ref(false);
+  const isOnlyPlaceholder = ref(false);
 
   const updateOptions = () => {
     options.value = [
@@ -74,7 +75,7 @@
       { value: "5 val", name: "new 55", disabled: true },
       { value: "6 val", name: "new 66" },
     ];
-    model.value = "3 val";
+    model.value = { value: "2 val", name: "new 22" };
   };
   const updateGroupOptions = () => {
     options.value = [
@@ -104,8 +105,7 @@
         ],
       },
     ];
-    // @ts-ignore
-    model.value = "1112 new_val";
+    model.value = null;
   };
 
   const childComponent = ref();
@@ -147,6 +147,7 @@
           <SettingToggleItem v-model="isSearchInDropdown" title="isSearchInDropdown" />
           <SettingToggleItem v-model="isCloneTitleToSearch" title="isCloneTitleToSearch" />
         </p>
+        <p><SettingToggleItem v-model="isOnlyPlaceholder" title="isOnlyPlaceholder" /></p>
 
         <p>
           <button @click="updateOptions">Set new Options</button>
@@ -160,13 +161,12 @@
       <h2>Result</h2>
       <SimpSelect
         v-model="model"
-        v-model:fullSelected="modelFull"
+        :options="options"
         :disabled="settingDisabled"
         :count-show-selected="setting_countShowSelected"
         :is-confirm-in-multi="isConfirmInMulti"
         :is-float="isFloat"
         :multiple="settingMultiple"
-        :options="options"
         :is-search="isSearch"
         ref="childComponent"
         :is-search-in-dropdown="isSearchInDropdown"
@@ -179,6 +179,7 @@
         :reset-all="isResetAll"
         class="select"
         :is-loading="isLoading"
+        :is-only-placeholder="isOnlyPlaceholder"
         @callback-close="
           () => {
             console.log('close');
@@ -193,7 +194,6 @@
     </div>
     <div>
       <p>Selected values: {{ model }}</p>
-      <p>Selected values full objects: {{ modelFull }}</p>
       <p><button @click.stop.prevent="childComponent.setIsLocalOpen()">toggle open</button></p>
     </div>
 

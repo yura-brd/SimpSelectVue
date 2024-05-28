@@ -3,19 +3,18 @@
   import { useSlots } from "vue";
   import type {
     ISimpleSelected,
-    ISimpleSelectedMulti,
     ISimpleSelectLocale,
     ISimpleSelectOption,
-    ISimpleSelectOptionGroup,
-  } from "./simpSelect.types";
+    ISimpleSelectOptionGroup, optionsItemsType,
+  } from './simpSelect.types';
   import { simpleSelectLocale } from "@/library/simpSelect/simpSelect.consts";
   import {
     cloneModelValue,
     cloneObj,
-    deepEqual,
+    deepEqual, equalModels,
     getClass,
     transformOptionWithGroup,
-  } from "@/library/simpSelect/simpSelect.utils";
+  } from '@/library/simpSelect/simpSelect.utils';
   import Top from "@/library/simpSelect/components/Top/Top.vue";
   import type {
     ILocalStoreStore,
@@ -37,10 +36,10 @@
   import NativeSelect from "@/library/simpSelect/components/NativeSelect.vue";
   import TopIconArrow from "@/library/simpSelect/components/Top/TopIconArrow.vue";
   import Loader from "@/library/simpSelect/components/Loader.vue";
-  import BodyListItemEmpty from '@/library/simpSelect/components/Body/BodyListItemEmpty.vue';
+  import BodyListItemEmpty from "@/library/simpSelect/components/Body/BodyListItemEmpty.vue";
 
   export interface ISimpleSelectProps {
-    options: ISimpleSelectOption[] | ISimpleSelectOptionGroup[];
+    options: optionsItemsType;
 
     disabled?: boolean;
     multiple?: boolean;
@@ -119,9 +118,9 @@
   const emits = defineEmits(["callbackOpen", "callbackClose"]);
 
   const model = defineModel<ISimpleSelected>({
-    default: "",
+    default: null,
   });
-  const modelFullSelected = defineModel("fullSelected");
+  // const modelFullSelected = defineModel("fullSelected");
   const $wrapper = ref<HTMLDivElement | null>(null);
 
   const searchText = ref<string>("");
@@ -156,33 +155,33 @@
     }
   });
 
-  const localSelected = ref<ISimpleSelected>(props.multiple ? [] : "");
-  const localSelectedFull = ref<ISimpleSelectOption[]>([]);
+  const localSelected = ref<ISimpleSelected>(null);
+  // const localSelectedFull = ref<ISimpleSelectOption[]>([]);
 
   // provide(keyInjectLocalSelectedFull, localSelectedFull);
 
   watch(
     model,
     () => {
-      if (!deepEqual(model.value, localSelected.value)) {
+      if (!equalModels(model.value, localSelected.value, props.keyValue)) {
         localSelected.value = cloneModelValue(model.value);
       }
     },
     { immediate: true, deep: true },
   );
-  watch(
-    () => props.options,
-    () => {
-      const res = updateLocalSelectedFull(model.value);
-      if (!res.length) {
-        localSelected.value = props.multiple ? [] : "";
-      }
-      if (modelFullSelected.value && !deepEqual(modelFullSelected.value, localSelectedFull.value)) {
-        modelFullSelected.value = cloneObj(localSelectedFull.value);
-      }
-    },
-    { deep: true },
-  );
+  // watch(
+  //   () => props.options,
+  //   () => {
+  //     const res = updateLocalSelectedFull(model.value);
+  //     if (!res.length) {
+  //       localSelected.value = props.multiple ? [] : "";
+  //     }
+  //     if (modelFullSelected.value && !deepEqual(modelFullSelected.value, localSelectedFull.value)) {
+  //       modelFullSelected.value = cloneObj(localSelectedFull.value);
+  //     // }
+  //   },
+  //   { deep: true },
+  // );
   // TODO сделать сравнение, выбранных. Если не совпадают, обновить
   // watch(
   //   () => [localSelected, localSelectedFull],
@@ -201,19 +200,18 @@
   // );
 
   const changeHandler = (e: Event) => {
-    const options = [];
     const target = e.target as HTMLSelectElement;
     if (props.multiple) {
+      const optionsRes:string[] = [];
       for (let i = 0; i < target.options.length; i++) {
         const option = target.options[i];
         if (option.selected) {
-          options.push(option.value);
+          optionsRes.push(option.value);
         }
       }
-      // model.value = options;
-      localSelected.value = options;
+      localSelected.value = transformOptionWithGroup(props.options).filter(optionItem => optionsRes.includes(optionItem[props.keyValue]));
     } else {
-      localSelected.value = target.value;
+      localSelected.value =  transformOptionWithGroup(props.options).filter(optionItem => optionItem[props.keyValue] === target.value );
     }
     nextTick(() => {
       updateOutsideModels("other");
@@ -222,53 +220,43 @@
   const setToggleOption: setToggleOptionType = (item: ISimpleSelectOption) => {
     // if select single, set single value
     if (!props.multiple) {
-      localSelected.value = item[props.keyValue];
+      localSelected.value = item
       return;
     }
 
     // multiselect
-    const selectedValues = localSelected.value as ISimpleSelectedMulti;
     // if nothing selected
-    if (!selectedValues || !selectedValues.length) {
-      localSelected.value = [item[props.keyValue]];
+    if (!localSelected.value || (Array.isArray(localSelected.value) && !localSelected.value.length)) {
+      localSelected.value = [ item ];
       return;
     }
     if (!Array.isArray(localSelected.value)) {
-      localSelected.value = [localSelected.value];
-    }
-
-    const index = selectedValues.indexOf(item[props.keyValue]);
-    if (index !== -1) {
-      (localSelected.value as ISimpleSelectedMulti).splice(index, 1);
-    } else {
-      (localSelected.value as ISimpleSelectedMulti).push(item[props.keyValue]);
-    }
-  };
-
-  const updateLocalSelectedFull = (newVal: ISimpleSelected): ISimpleSelectOption[] => {
-    // сохраняем полную информацию выбранных
-    const isArray = Array.isArray(newVal);
-    const transformOptions: ISimpleSelectOption[] = transformOptionWithGroup(props.options);
-
-    localSelectedFull.value = transformOptions.filter(el => {
-      if (isArray) {
-        return newVal.includes(el[props.keyValue]);
+      if (localSelected.value) {
+        localSelected.value = [localSelected.value];
+      } else {
+        localSelected.value = [];
       }
-      return newVal.toString() === el[props.keyValue].toString();
-    });
+    }
 
-    return localSelectedFull.value;
+    const index:boolean = localSelected.value.some((itemOption: ISimpleSelectOption) => item[props.keyValue] === itemOption[props.keyValue]);
+
+    if (index) {
+      (localSelected.value as ISimpleSelectOption[]) = localSelected.value.filter((itemOption: ISimpleSelectOption) => item[props.keyValue] !== itemOption[props.keyValue]);
+    } else {
+      (localSelected.value as ISimpleSelectOption[]).push(item);
+    }
   };
+
 
   onBeforeMount(() => {
-    updateLocalSelectedFull(localSelected.value);
+    // updateLocalSelectedFull(localSelected.value);
     updateOutsideModels("onBeforeMount");
   });
 
   watch(
     localSelected,
     newVal => {
-      updateLocalSelectedFull(newVal);
+      // updateLocalSelectedFull(newVal);
       if (!props.isConfirmInMulti) {
         updateOutsideModels("mainWatch");
       }
@@ -278,23 +266,18 @@
     },
   );
 
-  const updateOutsideModelsFull = () => {
-    modelFullSelected.value = cloneObj(localSelectedFull.value);
-  };
   const updateOutsideModelsSelected = () => {
     model.value = cloneModelValue(localSelected.value);
   };
   const updateOutsideModels: updateOutsideModelsType = () => {
     updateOutsideModelsSelected();
-    updateOutsideModelsFull();
   };
   const resetSelectedByDontConfirm = () => {
     localSelected.value = cloneModelValue(model.value);
-    // modelFullSelected.value = cloneObj(localSelectedFull.value);
   };
 
   const resetAll = (isConfirm: boolean) => {
-    localSelected.value = props.multiple ? [] : "";
+    localSelected.value = props.multiple ? [] : null;
     if (isConfirm) {
       nextTick(() => {
         updateOutsideModels("other");
@@ -303,7 +286,7 @@
     }
   };
   const selectAll = (isConfirm: boolean) => {
-    localSelected.value = transformOptionWithGroup(props.options).map(el => el[props.keyValue]);
+    localSelected.value = transformOptionWithGroup(props.options);
     if (isConfirm) {
       nextTick(() => {
         updateOutsideModels("other");
@@ -313,17 +296,19 @@
   };
 
   const getSelected = (item: ISimpleSelectOption): boolean => {
-    if (typeof localSelected.value === "object") {
-      return localSelected.value.includes(item[props.keyValue]);
-    } else {
-      return localSelected.value.toString() === item[props.keyValue].toString();
+    if (!localSelected.value) {
+      return false;
     }
+    if (Array.isArray(localSelected.value)) {
+      return localSelected.value.some(itemOption => item[props.keyValue] === itemOption[props.keyValue]);
+    }
+    return localSelected.value[props.keyValue].toString() === item[props.keyValue].toString();
   };
 
   provide<ILocalStoreStore>(keyInjectLocalStore, {
     isLocalOpen,
     setIsLocalOpen,
-    localSelectedFull,
+    localSelected,
     $wrapper,
     searchText,
     setSearchText,

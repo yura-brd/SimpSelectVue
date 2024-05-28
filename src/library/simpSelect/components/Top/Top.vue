@@ -29,33 +29,37 @@
   };
 
   const titleRes = computed(() => {
-    if (!localStore?.localSelectedFull.value) {
-      return {
-        fullString: "",
-        result: "",
-      };
-    }
-
     const resTitle: ITitleResult = {
       fullString: initAllProps?.titleMain || initAllProps?.locale!.title || "",
       result: initAllProps?.titleMain || initAllProps?.locale!.title || "",
     };
+    if (!localStore?.localSelected.value) {
+      return resTitle;
+    }
 
-    const selectedLength = localStore?.localSelectedFull.value.length;
-    if (localStore?.localSelectedFull.value.length && !initAllProps?.isOnlyPlaceholder) {
-      const arrNames = localStore?.localSelectedFull.value.map(el => el.name);
-      resTitle.fullString = arrNames.join(initAllProps?.sepChars);
-      if (initAllProps?.countShowSelected && initAllProps.countShowSelected < selectedLength) {
-        resTitle.result = `${initAllProps?.locale!.selected} ${selectedLength}`;
-      } else {
-        resTitle.result = arrNames.join(initAllProps?.sepChars);
+    if (Array.isArray(localStore.localSelected.value)) {
+      const selectedLength = localStore.localSelected.value.length;
+      if (selectedLength && !initAllProps?.isOnlyPlaceholder) {
+        const arrNames = localStore.localSelected.value.map(el => el[initAllProps!.keyTitle as string]);
+        resTitle.fullString = arrNames.join(initAllProps?.sepChars);
+        if (initAllProps?.countShowSelected && initAllProps.countShowSelected < selectedLength) {
+          resTitle.result = `${initAllProps?.locale!.selected} ${selectedLength}`;
+        } else {
+          resTitle.result = arrNames.join(initAllProps?.sepChars);
+        }
       }
-    }
-    if (initAllProps!.options.length && selectedLength === initAllProps.options.length) {
-      resTitle.result += ` <span >(${initAllProps?.locale!.all})<span>`;
+      if (initAllProps!.options.length && selectedLength === initAllProps!.options.length) {
+        resTitle.result += ` <span >(${initAllProps?.locale!.all})<span>`;
+      }
+    } else {
+      resTitle.fullString = localStore.localSelected.value[initAllProps!.keyTitle as string];
+      resTitle.result = localStore.localSelected.value[initAllProps!.keyTitle as string];
     }
 
-    localStore?.setTitleText(resTitle);
+
+
+
+    localStore.setTitleText(resTitle);
     return resTitle;
   });
 </script>
@@ -72,12 +76,12 @@
       <component
         :is="localStore!.componentTitle"
         :locale="initAllProps!.locale"
-        :local-selected-full="localStore?.localSelectedFull.value"
+        :local-selected="localStore!.localSelected.value"
         :titleRes="titleRes"
         :count-show-selected="initAllProps?.countShowSelected"
         :is-only-placeholder="initAllProps?.isOnlyPlaceholder"
-        :sep-chars="initAllProps?.sepChars"
-        :options="initAllProps?.options"
+        :sep-chars="initAllProps!.sepChars"
+        :options="initAllProps!.options"
       />
 
       <component :is="localStore!.componentArrowIcon" v-if="!initAllProps?.isLoading" />

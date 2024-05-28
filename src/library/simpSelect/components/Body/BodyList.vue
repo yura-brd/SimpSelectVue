@@ -5,13 +5,6 @@
   import type { ISimpleSelectOption, ISimpleSelectOptionGroup } from "@/library/simpSelect/simpSelect.types";
   import type { ISimpleSelectProps } from "@/library/simpSelect/SimpSelect.vue";
   import type { ILocalStoreStore } from "@/library/simpSelect/simpSelect.local.types";
-  // export interface IProps {
-  //   setToggleOption: setToggleOptionType;
-  // }
-
-  // const emits = defineEmits(["setIsLocalOpen", "optionClick"]);
-
-  // const props = defineProps<IProps>();
 
   const initAllProps = inject<ISimpleSelectProps>(keyInjectPropsAll);
 

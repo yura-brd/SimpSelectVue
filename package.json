@@ -17,7 +17,6 @@
   ],
   "main": "./dist/simpSelect-library.umd.js",
   "module": "./dist/simpSelect-library.es.js",
-	"type": "module",
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {

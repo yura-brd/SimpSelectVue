@@ -1,10 +1,16 @@
 <script setup lang="ts">
-  import type { ISimpleSelectLocale, ISimpleSelectOption } from "@/library/simpSelect/simpSelect.types";
-  import { getClass } from "@/library/simpSelect/simpSelect.utils";
+import type {
+  ISimpleSelected,
+  ISimpleSelectLocale,
+  optionsItemsType
+} from '@/library/simpSelect/simpSelect.types';
+import { getClass, transformOptionWithGroup } from '@/library/simpSelect/simpSelect.utils';
+  import { computed } from "vue";
+
 
   export interface IPropsSimpSelectTopTitleLocal {
     locale: ISimpleSelectLocale;
-    localSelectedFull: ISimpleSelectOption[];
+    localSelected: ISimpleSelected;
     titleRes: {
       fullString: "";
       result: "";
@@ -12,9 +18,27 @@
     countShowSelected?: number;
     isOnlyPlaceholder: boolean;
     sepChars: string;
-    options: ISimpleSelectOption[];
+    options: optionsItemsType;
   }
-  defineProps<IPropsSimpSelectTopTitleLocal>();
+  const props = defineProps<IPropsSimpSelectTopTitleLocal>();
+
+  const isClasses = computed(() => {
+    const res = {
+      placeholder: false,
+      fill: false,
+      full: false,
+    }
+    const itemsOptions = transformOptionWithGroup(props.options);
+    if (!props.localSelected || (Array.isArray(props.localSelected) && !props.localSelected.length)) {
+      res.placeholder = true;
+      return res;
+    }
+    res.fill = true;
+    if (Array.isArray(props.localSelected) && itemsOptions.length === props.localSelected.length) {
+      res.full = true;
+    }
+    return res;
+  })
 </script>
 
 <template>
@@ -23,9 +47,9 @@
     :class="[
       getClass('title'),
       {
-        [getClass('title--placeholder')]: !localSelectedFull.length,
-        [getClass('title--fill')]: localSelectedFull.length,
-        [getClass('title--full')]: localSelectedFull.length === options.length,
+        [getClass('title--placeholder')]: isClasses.placeholder,
+        [getClass('title--fill')]: isClasses.fill,
+        [getClass('title--full')]: isClasses.full,
       },
     ]"
     v-html="titleRes.result || ''"

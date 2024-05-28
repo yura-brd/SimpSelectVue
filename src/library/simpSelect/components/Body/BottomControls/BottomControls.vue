@@ -19,7 +19,6 @@
 </script>
 
 <template>
-  asdas
   <div :class="[classInit]">
     <component
       :is="localStore!.componentBottomControlOk"

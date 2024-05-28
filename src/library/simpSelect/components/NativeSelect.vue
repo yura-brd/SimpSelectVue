@@ -12,7 +12,7 @@
   const localStore = inject<ILocalStoreStore>(keyInjectLocalStore);
 
   const model = defineModel<ISimpleSelected>({
-    default: "",
+    default: null,
   });
   const changeHandler = (e: Event) => {
     emits("changeHandler", e);
