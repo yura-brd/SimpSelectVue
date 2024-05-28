@@ -1,7 +1,7 @@
-import type { ISimpleSelectLocale, ISimpleSelectOption } from "@/library/simpSelect/simpSelect.types";
+import type { ISimpleSelected, ISimpleSelectLocale, optionsItemsType } from '@/library/simpSelect/simpSelect.types';
 export interface IPropsSimpSelectTopTitleLocal {
     locale: ISimpleSelectLocale;
-    localSelectedFull: ISimpleSelectOption[];
+    localSelected: ISimpleSelected;
     titleRes: {
         fullString: "";
         result: "";
@@ -9,7 +9,7 @@ export interface IPropsSimpSelectTopTitleLocal {
     countShowSelected?: number;
     isOnlyPlaceholder: boolean;
     sepChars: string;
-    options: ISimpleSelectOption[];
+    options: optionsItemsType;
 }
 declare const _default: import("vue").DefineComponent<__VLS_TypePropsToRuntimeProps<IPropsSimpSelectTopTitleLocal>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<IPropsSimpSelectTopTitleLocal>>>, {}, {}>;
 export default _default;

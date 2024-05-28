@@ -1,5 +1,6 @@
 import type { IPropsSimpSelectTopTitleLocal } from "@/library/simpSelect/components/Top/TopTitle.vue";
 export interface ISimpleSelectLocale {
+    empty: string;
     noSearch: string;
     searchText: string;
     title: string;
@@ -10,9 +11,8 @@ export interface ISimpleSelectLocale {
     resetAll: string;
     selectAll: string;
 }
-export type ISimpleSelectedMulti = Array<string | number>;
-export type ISimpleSelectedSingle = string | number;
-export type ISimpleSelected = ISimpleSelectedMulti | ISimpleSelectedSingle;
+export type optionsItemsType = ISimpleSelectOption[] | ISimpleSelectOptionGroup[];
+export type ISimpleSelected = ISimpleSelectOption[] | ISimpleSelectOption | null;
 export interface ISimpleSelectOptionGroup {
     label: string;
     isOptgroupSelect: boolean;

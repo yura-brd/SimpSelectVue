@@ -1,7 +1,7 @@
-import type { ISimpleSelectLocale, ISimpleSelectOption, ISimpleSelectOptionGroup } from "./simpSelect.types";
+import type { ISimpleSelectLocale, optionsItemsType } from './simpSelect.types';
 import type { setIsLocalOpenType } from "@/library/simpSelect/simpSelect.local.types";
 export interface ISimpleSelectProps {
-    options: ISimpleSelectOption[] | ISimpleSelectOptionGroup[];
+    options: optionsItemsType;
     disabled?: boolean;
     multiple?: boolean;
     countShowSelected?: number | null;

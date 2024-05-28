@@ -1,4 +1,4 @@
-import type { ISimpleSelectOption } from "@/library/simpSelect/simpSelect.types";
+import type { ISimpleSelected, ISimpleSelectOption } from '@/library/simpSelect/simpSelect.types';
 import type { Component, Ref } from "vue";
 export type setIsLocalOpenType = (isOpen?: boolean) => void;
 export type setToggleOptionType = (item: ISimpleSelectOption) => void;
@@ -7,7 +7,7 @@ export type updateOutsideModelsType = (type: updateOutsideModelsTypeProps) => vo
 export interface ILocalStoreStore {
     isLocalOpen: Ref<boolean>;
     setIsLocalOpen: setIsLocalOpenType;
-    localSelectedFull: Ref<ISimpleSelectOption[]>;
+    localSelected: Ref<ISimpleSelected>;
     $wrapper: Ref<HTMLDivElement | null>;
     searchText: Ref<string>;
     setSearchText: (str?: string) => void;
@@ -19,7 +19,8 @@ export interface ILocalStoreStore {
     resetSelectedByDontConfirm: () => void;
     resetAll: (isConfirm: boolean) => void;
     selectAll: (isConfirm: boolean) => void;
-    componentItemList: Component;
+    componentItemListItem: Component;
+    componentItemListItemEmpty: Component;
     componentTitle: Component;
     componentBottomControl: Component;
     componentBottomControlOk: Component;

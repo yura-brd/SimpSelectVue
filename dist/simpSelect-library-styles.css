@@ -453,3 +453,35 @@
 .SimpleSel--float .SimpleSel__list {
   flex: 1;
 }
+
+.SimpleSel__loader_wrap {
+  width: var(--simpS_height_top);
+  height: var(--simpS_height_top);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SimpleSel__loader {
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  background: conic-gradient(rgba(0, 0, 0, 0) 10%, var(--simpS_color));
+  -webkit-mask: radial-gradient(farthest-side, rgba(0, 0, 0, 0) calc(100% - 4px), #000 0);
+  animation: SimpleSel_loader 1s infinite linear;
+}
+.SimpleSel__loader:after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: inherit;
+  animation: inherit;
+  animation-duration: 2s;
+}
+
+@keyframes SimpleSel_loader {
+  to {
+    transform: rotate(1turn);
+  }
+}
