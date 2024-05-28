@@ -27,6 +27,8 @@ export interface ILocalStoreStore {
     componentSelectAllControls: Component;
     componentSelectAllControlsSelect: Component;
     componentSelectAllControlsReset: Component;
+    componentArrowIcon: Component;
+    componentLoading: Component;
 }
 export interface ITitleResult {
     fullString: string;

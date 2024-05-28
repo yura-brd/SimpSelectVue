@@ -1,0 +1,25 @@
+<script setup lang="ts">
+  import type { ISimpleSelectOption } from "@/library/simpSelect/simpSelect.types";
+  import { getClass } from "@/library/simpSelect/simpSelect.utils";
+  import { inject } from "vue";
+  import { keyInjectPropsAll } from "@/library/simpSelect/simpSelect.keys";
+  import type { ISimpleSelectProps } from "@/library/simpSelect/SimpSelect.vue";
+
+  interface IProps {
+    item: ISimpleSelectOption;
+  }
+  // const emits = defineEmits(["setIsLocalOpen", "optionClick"]);
+
+  defineProps<IProps>();
+
+  const initClas = getClass("list_item_body");
+  const initAllProps = inject<ISimpleSelectProps>(keyInjectPropsAll);
+</script>
+
+<template>
+  <div :class="[initClas]">
+    {{ initAllProps!.locale?.empty }}
+  </div>
+</template>
+
+<style scoped lang="scss"></style>

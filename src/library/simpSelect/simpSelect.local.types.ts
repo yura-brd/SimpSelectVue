@@ -24,7 +24,8 @@ export interface ILocalStoreStore {
   resetAll: (isConfirm: boolean) => void;
   selectAll: (isConfirm: boolean) => void;
 
-  componentItemList: Component;
+  componentItemListItem: Component;
+  componentItemListItemEmpty: Component;
   componentTitle: Component;
   componentBottomControl: Component;
   componentBottomControlOk: Component;

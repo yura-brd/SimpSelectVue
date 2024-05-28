@@ -37,6 +37,7 @@
   import NativeSelect from "@/library/simpSelect/components/NativeSelect.vue";
   import TopIconArrow from "@/library/simpSelect/components/Top/TopIconArrow.vue";
   import Loader from "@/library/simpSelect/components/Loader.vue";
+  import BodyListItemEmpty from '@/library/simpSelect/components/Body/BodyListItemEmpty.vue';
 
   export interface ISimpleSelectProps {
     options: ISimpleSelectOption[] | ISimpleSelectOptionGroup[];
@@ -334,7 +335,8 @@
     resetSelectedByDontConfirm,
     resetAll,
     selectAll,
-    componentItemList: slots.itemList || BodyListItem,
+    componentItemListItem: slots.itemListItem || BodyListItem,
+    componentItemListItemEmpty: slots.itemListItemEmpty || BodyListItemEmpty,
     componentTitle: slots.title || TopTitle,
 
     componentBottomControl: slots.bottomControl || BottomControls,

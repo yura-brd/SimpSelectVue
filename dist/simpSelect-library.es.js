@@ -1,4 +1,4 @@
-import { defineComponent, openBlock, createElementBlock, normalizeClass, unref, ref, inject, computed, watch, withDirectives, vModelDynamic, withKeys, withModifiers, createBlock, resolveDynamicComponent, createVNode, createCommentVNode, Fragment, renderList, createElementVNode, toDisplayString, createTextVNode, mergeModels, useModel, vModelSelect, useSlots, provide, readonly, onBeforeMount, nextTick } from "vue";
+import { defineComponent, ref, inject, computed, watch, withDirectives, openBlock, createElementBlock, normalizeClass, unref, vModelDynamic, withKeys, withModifiers, createBlock, resolveDynamicComponent, createCommentVNode, Fragment, renderList, createElementVNode, toDisplayString, createVNode, createTextVNode, mergeModels, useModel, vModelSelect, pushScopeId, popScopeId, useSlots, provide, readonly, onBeforeMount, nextTick } from "vue";
 const simpleSelectLocale = {
   noSearch: "No matches for",
   searchText: "Search",
@@ -26,7 +26,7 @@ const cloneObj = (obj) => {
 };
 const transformOptionWithGroup = (options) => {
   var _a;
-  return ((_a = options[0]) == null ? void 0 : _a.isOptgroupSelect) ? [].concat(...options.map((group) => group.items.map((item) => item))) : options;
+  return ((_a = options[0]) == null ? void 0 : _a.isOptgroupSelect) ? [].concat(...options.map((group) => group.items.map((item) => item))) : cloneObj(options);
 };
 const deepEqual = (object1, object2) => {
   const keys1 = Object.keys(object1);
@@ -47,20 +47,10 @@ const deepEqual = (object1, object2) => {
 function isObject(object) {
   return object != null && typeof object === "object";
 }
-const _sfc_main$e = defineComponent({
-  __name: "TopIconArrow",
-  setup(__props) {
-    return (_ctx, _cache) => {
-      return openBlock(), createElementBlock("span", {
-        class: normalizeClass([unref(getClass)("icon")])
-      }, null, 2);
-    };
-  }
-});
 const keyInjectPropsAll = Symbol();
 const keyInjectLocalStore = Symbol();
-const _hoisted_1$4 = ["type", "tabindex", "placeholder"];
-const _sfc_main$d = defineComponent({
+const _hoisted_1$5 = ["type", "tabindex", "placeholder"];
+const _sfc_main$f = defineComponent({
   __name: "Search",
   props: {
     searchTypeInput: { default: "search" },
@@ -124,20 +114,23 @@ const _sfc_main$d = defineComponent({
         autocomplete: "off",
         "aria-autocomplete": "none",
         inputmode: "none"
-      }, null, 10, _hoisted_1$4)), [
+      }, null, 10, _hoisted_1$5)), [
         [vModelDynamic, textInput.value]
       ]);
     };
   }
 });
-const _hoisted_1$3 = ["tabindex", "onKeydown"];
-const _sfc_main$c = defineComponent({
+const _hoisted_1$4 = ["tabindex", "onKeydown"];
+const _sfc_main$e = defineComponent({
   __name: "Top",
   emits: ["setIsLocalOpen"],
   setup(__props) {
     const initAllProps = inject(keyInjectPropsAll);
     const localStore = inject(keyInjectLocalStore);
     const tabIndex = computed(() => {
+      if (initAllProps == null ? void 0 : initAllProps.disabled) {
+        return -1;
+      }
       return (localStore == null ? void 0 : localStore.isLocalOpen.value) ? -1 : 0;
     });
     const keyOpen = () => {
@@ -171,7 +164,7 @@ const _sfc_main$c = defineComponent({
       return resTitle;
     });
     return (_ctx, _cache) => {
-      var _a, _b, _c, _d, _e, _f, _g, _h, _i;
+      var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l;
       return openBlock(), createElementBlock("div", {
         class: normalizeClass([unref(getClass)("top")])
       }, [
@@ -191,26 +184,27 @@ const _sfc_main$c = defineComponent({
             "sep-chars": (_f = unref(initAllProps)) == null ? void 0 : _f.sepChars,
             options: (_g = unref(initAllProps)) == null ? void 0 : _g.options
           }, null, 8, ["locale", "local-selected-full", "titleRes", "count-show-selected", "is-only-placeholder", "sep-chars", "options"])),
-          createVNode(_sfc_main$e)
-        ], 42, _hoisted_1$3)) : createCommentVNode("", true),
-        ((_h = unref(initAllProps)) == null ? void 0 : _h.isSearch) && !unref(initAllProps).isSearchInDropdown ? (openBlock(), createBlock(_sfc_main$d, {
+          !((_h = unref(initAllProps)) == null ? void 0 : _h.isLoading) ? (openBlock(), createBlock(resolveDynamicComponent(unref(localStore).componentArrowIcon), { key: 0 })) : createCommentVNode("", true),
+          ((_i = unref(initAllProps)) == null ? void 0 : _i.isLoading) ? (openBlock(), createBlock(resolveDynamicComponent(unref(localStore).componentLoading), { key: 1 })) : createCommentVNode("", true)
+        ], 42, _hoisted_1$4)) : createCommentVNode("", true),
+        ((_j = unref(initAllProps)) == null ? void 0 : _j.isSearch) && !unref(initAllProps).isSearchInDropdown && !((_k = unref(initAllProps)) == null ? void 0 : _k.isFloat) ? (openBlock(), createBlock(_sfc_main$f, {
           key: 1,
-          "search-type-input": (_i = unref(initAllProps)) == null ? void 0 : _i.searchTypeInput,
+          "search-type-input": (_l = unref(initAllProps)) == null ? void 0 : _l.searchTypeInput,
           "is-dropdown": false
         }, null, 8, ["search-type-input"])) : createCommentVNode("", true)
       ], 2);
     };
   }
 });
-const _hoisted_1$2 = {
+const _hoisted_1$3 = {
   key: 0,
   class: "SimpleSel__group_items"
 };
-const _hoisted_2$1 = { class: "SimpleSel__group_title" };
-const _hoisted_3$1 = { class: "SimpleSel__group" };
+const _hoisted_2$2 = { class: "SimpleSel__group_title" };
+const _hoisted_3$2 = { class: "SimpleSel__group" };
 const _hoisted_4$1 = ["tabindex", "onKeyup", "onClick"];
 const _hoisted_5 = ["tabindex", "onKeyup", "onClick"];
-const _sfc_main$b = defineComponent({
+const _sfc_main$d = defineComponent({
   __name: "BodyList",
   setup(__props) {
     const initAllProps = inject(keyInjectPropsAll);
@@ -300,9 +294,9 @@ const _sfc_main$b = defineComponent({
         (openBlock(true), createElementBlock(Fragment, null, renderList(itemFilter.value, (group, index) => {
           var _a;
           return openBlock(), createElementBlock(Fragment, { key: index }, [
-            group.isOptgroupSelect ? (openBlock(), createElementBlock("li", _hoisted_1$2, [
-              createElementVNode("div", _hoisted_2$1, toDisplayString(group.label), 1),
-              createElementVNode("ul", _hoisted_3$1, [
+            group.isOptgroupSelect ? (openBlock(), createElementBlock("li", _hoisted_1$3, [
+              createElementVNode("div", _hoisted_2$2, toDisplayString(group.label), 1),
+              createElementVNode("ul", _hoisted_3$2, [
                 (openBlock(true), createElementBlock(Fragment, null, renderList(group.items, (item, ind) => {
                   var _a2;
                   return openBlock(), createElementBlock("li", {
@@ -355,7 +349,7 @@ const _sfc_main$b = defineComponent({
     };
   }
 });
-const _sfc_main$a = defineComponent({
+const _sfc_main$c = defineComponent({
   __name: "Body",
   setup(__props) {
     const initAllProps = inject(keyInjectPropsAll);
@@ -398,14 +392,16 @@ const _sfc_main$a = defineComponent({
         if (initAllProps == null ? void 0 : initAllProps.isFloat) {
           (_a = document == null ? void 0 : document.body) == null ? void 0 : _a.classList.toggle(toggleOpenBodyClass, newVal);
         }
-        if (newVal) {
-          document == null ? void 0 : document.addEventListener("click", closeClickOutside);
-          document == null ? void 0 : document.addEventListener("keyup", closeEsc);
-          document == null ? void 0 : document.addEventListener("focusout", focusOut);
-        } else {
-          document == null ? void 0 : document.removeEventListener("click", closeClickOutside);
-          document == null ? void 0 : document.removeEventListener("keyup", closeEsc);
-          document == null ? void 0 : document.removeEventListener("focusout", focusOut);
+        if (typeof window !== "undefined") {
+          if (newVal) {
+            document == null ? void 0 : document.addEventListener("click", closeClickOutside);
+            document == null ? void 0 : document.addEventListener("keyup", closeEsc);
+            document == null ? void 0 : document.addEventListener("focusout", focusOut);
+          } else {
+            document == null ? void 0 : document.removeEventListener("click", closeClickOutside);
+            document == null ? void 0 : document.removeEventListener("keyup", closeEsc);
+            document == null ? void 0 : document.removeEventListener("focusout", focusOut);
+          }
         }
       },
       {
@@ -445,7 +441,7 @@ const _sfc_main$a = defineComponent({
           }
         ])
       }, [
-        ((_b = unref(initAllProps)) == null ? void 0 : _b.isSearch) && unref(initAllProps).isSearchInDropdown ? (openBlock(), createBlock(_sfc_main$d, {
+        ((_b = unref(initAllProps)) == null ? void 0 : _b.isSearch) && unref(initAllProps).isSearchInDropdown ? (openBlock(), createBlock(_sfc_main$f, {
           key: 0,
           "search-type-input": (_c = unref(initAllProps)) == null ? void 0 : _c.searchTypeInput,
           "is-dropdown": true
@@ -456,7 +452,7 @@ const _sfc_main$a = defineComponent({
           reset: resetAll,
           locale: unref(initAllProps).locale
         }, null, 8, ["locale"])) : createCommentVNode("", true),
-        createVNode(_sfc_main$b),
+        createVNode(_sfc_main$d),
         ((_f = unref(initAllProps)) == null ? void 0 : _f.isConfirmInMulti) ? (openBlock(), createBlock(resolveDynamicComponent(unref(localStore).componentBottomControl), {
           key: 2,
           confirm: buttonControlConfirm,
@@ -467,7 +463,7 @@ const _sfc_main$a = defineComponent({
     };
   }
 });
-const _sfc_main$9 = defineComponent({
+const _sfc_main$b = defineComponent({
   __name: "BodyListItem",
   props: {
     item: {}
@@ -484,13 +480,13 @@ const _sfc_main$9 = defineComponent({
           key: 0,
           class: normalizeClass([unref(getClass)("list_item_icon")])
         }, null, 2)) : createCommentVNode("", true),
-        createTextVNode(" " + toDisplayString(_ctx.item.name), 1)
+        createTextVNode(" " + toDisplayString(_ctx.item[unref(initAllProps).keyTitle] || ""), 1)
       ], 2);
     };
   }
 });
-const _hoisted_1$1 = ["title", "innerHTML"];
-const _sfc_main$8 = defineComponent({
+const _hoisted_1$2 = ["title", "innerHTML"];
+const _sfc_main$a = defineComponent({
   __name: "TopTitle",
   props: {
     locale: {},
@@ -514,11 +510,11 @@ const _sfc_main$8 = defineComponent({
           }
         ]),
         innerHTML: _ctx.titleRes.result || ""
-      }, null, 10, _hoisted_1$1);
+      }, null, 10, _hoisted_1$2);
     };
   }
 });
-const _sfc_main$7 = defineComponent({
+const _sfc_main$9 = defineComponent({
   __name: "BottomControls",
   props: {
     confirm: { type: Function },
@@ -530,24 +526,27 @@ const _sfc_main$7 = defineComponent({
     const classInit = getClass("bottom_controls");
     const classInitItem = getClass("bottom_control");
     return (_ctx, _cache) => {
-      return openBlock(), createElementBlock("div", {
-        class: normalizeClass([unref(classInit)])
-      }, [
-        (openBlock(), createBlock(resolveDynamicComponent(unref(localStore).componentBottomControlOk), {
-          "class-init": unref(classInitItem),
-          callback: _ctx.confirm,
-          locale: _ctx.locale
-        }, null, 8, ["class-init", "callback", "locale"])),
-        (openBlock(), createBlock(resolveDynamicComponent(unref(localStore).componentBottomControlNo), {
-          "class-init": unref(classInitItem),
-          callback: _ctx.cancellation,
-          locale: _ctx.locale
-        }, null, 8, ["class-init", "callback", "locale"]))
-      ], 2);
+      return openBlock(), createElementBlock(Fragment, null, [
+        createTextVNode(" asdas "),
+        createElementVNode("div", {
+          class: normalizeClass([unref(classInit)])
+        }, [
+          (openBlock(), createBlock(resolveDynamicComponent(unref(localStore).componentBottomControlOk), {
+            "class-init": unref(classInitItem),
+            callback: _ctx.confirm,
+            locale: _ctx.locale
+          }, null, 8, ["class-init", "callback", "locale"])),
+          (openBlock(), createBlock(resolveDynamicComponent(unref(localStore).componentBottomControlNo), {
+            "class-init": unref(classInitItem),
+            callback: _ctx.cancellation,
+            locale: _ctx.locale
+          }, null, 8, ["class-init", "callback", "locale"]))
+        ], 2)
+      ], 64);
     };
   }
 });
-const _sfc_main$6 = defineComponent({
+const _sfc_main$8 = defineComponent({
   __name: "BottomControlsOk",
   props: {
     callback: { type: Function },
@@ -564,7 +563,7 @@ const _sfc_main$6 = defineComponent({
     };
   }
 });
-const _sfc_main$5 = defineComponent({
+const _sfc_main$7 = defineComponent({
   __name: "BottomControlsNo",
   props: {
     callback: { type: Function },
@@ -582,7 +581,7 @@ const _sfc_main$5 = defineComponent({
     };
   }
 });
-const _sfc_main$4 = defineComponent({
+const _sfc_main$6 = defineComponent({
   __name: "SelectAllControls",
   props: {
     select: { type: Function },
@@ -599,7 +598,7 @@ const _sfc_main$4 = defineComponent({
       return openBlock(), createElementBlock("div", {
         class: normalizeClass([unref(classInit)])
       }, [
-        ((_a = unref(initAllProps)) == null ? void 0 : _a.resetAll) ? (openBlock(), createBlock(resolveDynamicComponent(unref(localStore).componentSelectAllControlsSelect), {
+        ((_a = unref(initAllProps)) == null ? void 0 : _a.selectAll) ? (openBlock(), createBlock(resolveDynamicComponent(unref(localStore).componentSelectAllControlsSelect), {
           key: 0,
           locale: _ctx.locale,
           "class-init": unref(classInitItem),
@@ -615,7 +614,7 @@ const _sfc_main$4 = defineComponent({
     };
   }
 });
-const _sfc_main$3 = defineComponent({
+const _sfc_main$5 = defineComponent({
   __name: "SelectAllControlSelect",
   props: {
     callback: { type: Function },
@@ -637,7 +636,7 @@ const _sfc_main$3 = defineComponent({
     };
   }
 });
-const _sfc_main$2 = defineComponent({
+const _sfc_main$4 = defineComponent({
   __name: "SelectAllControlReset",
   props: {
     callback: { type: Function },
@@ -659,11 +658,11 @@ const _sfc_main$2 = defineComponent({
     };
   }
 });
-const _hoisted_1 = ["disabled", "multiple"];
-const _hoisted_2 = ["label", "disabled"];
-const _hoisted_3 = ["selected", "disabled", "value"];
+const _hoisted_1$1 = ["disabled", "multiple"];
+const _hoisted_2$1 = ["label", "disabled"];
+const _hoisted_3$1 = ["selected", "disabled", "value"];
 const _hoisted_4 = ["selected", "disabled", "value"];
-const _sfc_main$1 = defineComponent({
+const _sfc_main$3 = defineComponent({
   __name: "NativeSelect",
   props: {
     "modelValue": {
@@ -703,22 +702,51 @@ const _sfc_main$1 = defineComponent({
                   selected: unref(localStore).getSelected(item),
                   disabled: item.disabled,
                   value: item.value
-                }, toDisplayString(item.name), 9, _hoisted_3);
+                }, toDisplayString(item[unref(initAllProps).keyTitle]), 9, _hoisted_3$1);
               }), 128))
-            ], 8, _hoisted_2)) : (openBlock(), createElementBlock("option", {
+            ], 8, _hoisted_2$1)) : (openBlock(), createElementBlock("option", {
               key: group.valueOf() + "_" + index,
               selected: unref(localStore).getSelected(group),
               disabled: group.disabled,
               value: group.value
-            }, toDisplayString(group.name), 9, _hoisted_4))
+            }, toDisplayString(group[unref(initAllProps).keyTitle]), 9, _hoisted_4))
           ], 64);
         }), 128))
-      ], 42, _hoisted_1)), [
+      ], 42, _hoisted_1$1)), [
         [vModelSelect, model.value]
       ]);
     };
   }
 });
+const _sfc_main$2 = defineComponent({
+  __name: "TopIconArrow",
+  setup(__props) {
+    return (_ctx, _cache) => {
+      return openBlock(), createElementBlock("span", {
+        class: normalizeClass([unref(getClass)("icon")])
+      }, null, 2);
+    };
+  }
+});
+var Loader_vue_vue_type_style_index_0_scoped_true_lang = "";
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+const _sfc_main$1 = {};
+const _withScopeId = (n) => (pushScopeId("data-v-6a1d5d1b"), n = n(), popScopeId(), n);
+const _hoisted_1 = { class: "loader_wrap" };
+const _hoisted_2 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createElementVNode("div", { class: "loader" }, null, -1));
+const _hoisted_3 = [
+  _hoisted_2
+];
+function _sfc_render(_ctx, _cache) {
+  return openBlock(), createElementBlock("div", _hoisted_1, _hoisted_3);
+}
+var Loader = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-6a1d5d1b"]]);
 const _sfc_main = defineComponent({
   __name: "SimpSelect",
   props: /* @__PURE__ */ mergeModels({
@@ -734,17 +762,20 @@ const _sfc_main = defineComponent({
     isAlwaysOpen: { type: Boolean, default: false },
     isSearch: { type: Boolean, default: true },
     isCloneTitleToSearch: { type: Boolean, default: true },
-    searchTypeInput: { default: "text" },
+    searchTypeInput: { default: "search" },
     isSearchInDropdown: { type: Boolean, default: false },
     searchFieldsKeys: { default: () => ["name"] },
     isConfirmInMulti: { type: Boolean, default: false },
     isConfirmInMultiOkClickOutside: { type: Boolean, default: false },
+    keyValue: { default: "value" },
+    keyTitle: { default: "name" },
     isSimpleShowCheckbox: { type: Boolean, default: false },
     selectAll: { type: Boolean, default: false },
     selectAllAfterClose: { type: Boolean, default: true },
     resetAll: { type: Boolean, default: false },
     resetAllAfterClose: { type: Boolean, default: true },
     isUp: { type: Boolean, default: false },
+    isLoading: { type: Boolean, default: false },
     isNative: { type: Boolean, default: false },
     isFloat: { type: Boolean, default: false }
   }, {
@@ -755,11 +786,12 @@ const _sfc_main = defineComponent({
     "fullSelected": {},
     "fullSelectedModifiers": {}
   }),
-  emits: ["update:modelValue", "update:fullSelected"],
-  setup(__props) {
+  emits: /* @__PURE__ */ mergeModels(["callbackOpen", "callbackClose"], ["update:modelValue", "update:fullSelected"]),
+  setup(__props, { expose: __expose, emit: __emit }) {
     const slots = useSlots();
     const props = __props;
     provide(keyInjectPropsAll, readonly(props));
+    const emits = __emit;
     const model = useModel(__props, "modelValue");
     const modelFullSelected = useModel(__props, "fullSelected");
     const $wrapper = ref(null);
@@ -776,12 +808,22 @@ const _sfc_main = defineComponent({
     };
     const isLocalOpen = ref(false);
     const setIsLocalOpen = (isOpen) => {
+      if (props.disabled) {
+        return;
+      }
       if (isOpen === true || isOpen === false) {
         isLocalOpen.value = isOpen;
       } else {
         isLocalOpen.value = !isLocalOpen.value;
       }
     };
+    watch(isLocalOpen, (newVal) => {
+      if (newVal) {
+        emits("callbackOpen");
+      } else {
+        emits("callbackClose");
+      }
+    });
     const localSelected = ref(props.multiple ? [] : "");
     const localSelectedFull = ref([]);
     watch(
@@ -791,7 +833,20 @@ const _sfc_main = defineComponent({
           localSelected.value = cloneModelValue(model.value);
         }
       },
-      { immediate: true }
+      { immediate: true, deep: true }
+    );
+    watch(
+      () => props.options,
+      () => {
+        const res = updateLocalSelectedFull(model.value);
+        if (!res.length) {
+          localSelected.value = props.multiple ? [] : "";
+        }
+        if (modelFullSelected.value && !deepEqual(modelFullSelected.value, localSelectedFull.value)) {
+          modelFullSelected.value = cloneObj(localSelectedFull.value);
+        }
+      },
+      { deep: true }
     );
     const changeHandler = (e) => {
       const options = [];
@@ -813,22 +868,22 @@ const _sfc_main = defineComponent({
     };
     const setToggleOption = (item) => {
       if (!props.multiple) {
-        localSelected.value = item.value;
+        localSelected.value = item[props.keyValue];
         return;
       }
       const selectedValues = localSelected.value;
       if (!selectedValues || !selectedValues.length) {
-        localSelected.value = [item.value];
+        localSelected.value = [item[props.keyValue]];
         return;
       }
       if (!Array.isArray(localSelected.value)) {
         localSelected.value = [localSelected.value];
       }
-      const index = selectedValues.indexOf(item.value);
+      const index = selectedValues.indexOf(item[props.keyValue]);
       if (index !== -1) {
         localSelected.value.splice(index, 1);
       } else {
-        localSelected.value.push(item.value);
+        localSelected.value.push(item[props.keyValue]);
       }
     };
     const updateLocalSelectedFull = (newVal) => {
@@ -836,9 +891,9 @@ const _sfc_main = defineComponent({
       const transformOptions = transformOptionWithGroup(props.options);
       localSelectedFull.value = transformOptions.filter((el) => {
         if (isArray) {
-          return newVal.includes(el.value);
+          return newVal.includes(el[props.keyValue]);
         }
-        return newVal.toString() === el.value.toString();
+        return newVal.toString() === el[props.keyValue].toString();
       });
       return localSelectedFull.value;
     };
@@ -858,9 +913,15 @@ const _sfc_main = defineComponent({
         deep: true
       }
     );
-    const updateOutsideModels = () => {
-      model.value = cloneModelValue(localSelected.value);
+    const updateOutsideModelsFull = () => {
       modelFullSelected.value = cloneObj(localSelectedFull.value);
+    };
+    const updateOutsideModelsSelected = () => {
+      model.value = cloneModelValue(localSelected.value);
+    };
+    const updateOutsideModels = () => {
+      updateOutsideModelsSelected();
+      updateOutsideModelsFull();
     };
     const resetSelectedByDontConfirm = () => {
       localSelected.value = cloneModelValue(model.value);
@@ -875,7 +936,7 @@ const _sfc_main = defineComponent({
       }
     };
     const selectAll = (isConfirm) => {
-      localSelected.value = transformOptionWithGroup(props.options).map((el) => el.value);
+      localSelected.value = transformOptionWithGroup(props.options).map((el) => el[props.keyValue]);
       if (isConfirm) {
         nextTick(() => {
           updateOutsideModels();
@@ -885,9 +946,9 @@ const _sfc_main = defineComponent({
     };
     const getSelected = (item) => {
       if (typeof localSelected.value === "object") {
-        return localSelected.value.includes(item.value);
+        return localSelected.value.includes(item[props.keyValue]);
       } else {
-        return localSelected.value.toString() === item.value.toString();
+        return localSelected.value.toString() === item[props.keyValue].toString();
       }
     };
     provide(keyInjectLocalStore, {
@@ -905,14 +966,19 @@ const _sfc_main = defineComponent({
       resetSelectedByDontConfirm,
       resetAll,
       selectAll,
-      componentItemList: slots.itemList || _sfc_main$9,
-      componentTitle: slots.title || _sfc_main$8,
-      componentBottomControl: slots.bottomControl || _sfc_main$7,
-      componentBottomControlOk: slots.bottomControlOk || _sfc_main$6,
-      componentBottomControlNo: slots.bottomControlNo || _sfc_main$5,
-      componentSelectAllControls: slots.selectControls || _sfc_main$4,
-      componentSelectAllControlsSelect: slots.selectControlsSelect || _sfc_main$3,
-      componentSelectAllControlsReset: slots.selectControlsReset || _sfc_main$2
+      componentItemList: slots.itemList || _sfc_main$b,
+      componentTitle: slots.title || _sfc_main$a,
+      componentBottomControl: slots.bottomControl || _sfc_main$9,
+      componentBottomControlOk: slots.bottomControlOk || _sfc_main$8,
+      componentBottomControlNo: slots.bottomControlNo || _sfc_main$7,
+      componentSelectAllControls: slots.selectControls || _sfc_main$6,
+      componentSelectAllControlsSelect: slots.selectControlsSelect || _sfc_main$5,
+      componentSelectAllControlsReset: slots.selectControlsReset || _sfc_main$4,
+      componentArrowIcon: slots.arrowIcon || _sfc_main$2,
+      componentLoading: slots.loading || Loader
+    });
+    __expose({
+      setIsLocalOpen
     });
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("div", {
@@ -927,18 +993,19 @@ const _sfc_main = defineComponent({
             [unref(getClass)("float", true)]: _ctx.isFloat,
             [unref(getClass)("disabled", true)]: _ctx.disabled,
             [unref(getClass)("open", true)]: isLocalOpen.value,
-            [unref(getClass)("up", true)]: _ctx.isUp
+            [unref(getClass)("up", true)]: _ctx.isUp,
+            [unref(getClass)("loading", true)]: _ctx.isLoading
           }
         ])
       }, [
-        props.isNative ? (openBlock(), createBlock(_sfc_main$1, {
+        props.isNative ? (openBlock(), createBlock(_sfc_main$3, {
           key: 0,
           modelValue: model.value,
           "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => model.value = $event),
           onChangeHandler: changeHandler
         }, null, 8, ["modelValue"])) : createCommentVNode("", true),
-        createVNode(_sfc_main$c, { onSetIsLocalOpen: setIsLocalOpen }),
-        !props.isNative ? (openBlock(), createBlock(_sfc_main$a, { key: 1 })) : createCommentVNode("", true)
+        createVNode(_sfc_main$e, { onSetIsLocalOpen: setIsLocalOpen }),
+        !props.isNative ? (openBlock(), createBlock(_sfc_main$c, { key: 1 })) : createCommentVNode("", true)
       ], 2);
     };
   }

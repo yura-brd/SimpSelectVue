@@ -10,6 +10,7 @@ export const simpleSelectLocale: ISimpleSelectLocale = {
   cancel: "Cancel",
   selectAll: "Select all",
   resetAll: "Reset all",
+  empty: "Empty",
 };
 
 export const nameSelect = "SimpSelect";

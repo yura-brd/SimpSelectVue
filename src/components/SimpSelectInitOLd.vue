@@ -178,7 +178,7 @@
         <template #title="{ titleRes, ...props }: { titleRes: any }">
           <div>~~ {{ titleRes?.result }}~~</div>
         </template>
-        <template #itemList="{ item, ...props }: { item: ISimpleSelectOption }">
+        <template #itemListItem="{ item, ...props }: { item: ISimpleSelectOption }">
           <div v-bind="props">
             <strong>
               {{ item.name }}

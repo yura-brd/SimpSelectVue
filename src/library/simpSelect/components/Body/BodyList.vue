@@ -100,12 +100,19 @@
     }
     changeItemHandler(e, item);
   };
+
+  const initClass = getClass("group_items");
 </script>
 
 <template>
   <ul :class="[getClass('list')]" :tabindex="0" @keydown="keyUpList" @keyup.enter="keyUpListEnter">
-    <template v-for="(group, index) in itemFilter" :key="index">
-      <li v-if="group.isOptgroupSelect" class="SimpleSel__group_items">
+    <template v-if="!itemFilter.length">
+      <li :class="[initClass]">
+        <component :is="localStore!.componentItemListItemEmpty" />
+      </li>
+    </template>
+    <template v-for="(group, index) in itemFilter" v-else :key="index">
+      <li v-if="group.isOptgroupSelect" :class="[initClass]">
         <div class="SimpleSel__group_title">{{ group.label }}</div>
         <ul class="SimpleSel__group">
           <li
@@ -123,7 +130,7 @@
             @keyup.prevent.stop.enter="selectedItem($event, item, group as ISimpleSelectOptionGroup)"
             @click.prevent="selectedItem($event, item, group as ISimpleSelectOptionGroup)"
           >
-            <component :is="localStore!.componentItemList" v-if="initAllProps" :item="item" />
+            <component :is="localStore!.componentItemListItem" v-if="initAllProps" :item="item" />
           </li>
         </ul>
       </li>
@@ -143,7 +150,7 @@
           @click.prevent="selectedItem($event, group as ISimpleSelectOption)"
         >
           <!-- <component :is="initAllProps.createComponentListItem" v-if="initAllProps" :item-option="item" />-->
-          <component :is="localStore!.componentItemList" v-if="initAllProps" :item="group" />
+          <component :is="localStore!.componentItemListItem" v-if="initAllProps" :item="group" />
         </li>
       </template>
     </template>

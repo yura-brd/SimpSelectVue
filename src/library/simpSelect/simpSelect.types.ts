@@ -3,6 +3,7 @@
 import type { IPropsSimpSelectTopTitleLocal } from "@/library/simpSelect/components/Top/TopTitle.vue";
 
 export interface ISimpleSelectLocale {
+  empty: string;
   noSearch: string;
   searchText: string;
   title: string;

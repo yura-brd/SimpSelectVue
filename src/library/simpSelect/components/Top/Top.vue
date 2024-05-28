@@ -51,7 +51,7 @@
         resTitle.result = arrNames.join(initAllProps?.sepChars);
       }
     }
-    if (selectedLength === initAllProps?.options.length) {
+    if (initAllProps!.options.length && selectedLength === initAllProps.options.length) {
       resTitle.result += ` <span >(${initAllProps?.locale!.all})<span>`;
     }
 

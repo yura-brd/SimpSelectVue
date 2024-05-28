@@ -1,5 +1,5 @@
 {
-  "name": "vue3-simp-select",
+  "name": "vue-simp-select",
   "license": "MIT",
   "homepage": "",
   "author": "Yurii K.",
@@ -15,16 +15,17 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/select-library.umd.js",
-  "module": "./dist/select-library.es.js",
+  "main": "./dist/simpSelect-library.umd.js",
+  "module": "./dist/simpSelect-library.es.js",
+	"type": "module",
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/select-library.es.js",
-      "require": "./dist/select-library.umd.js"
+      "import": "./dist/simpSelect-library.es.js",
+      "require": "./dist/simpSelect-library.umd.js"
     },
-    "./select-library-styles.css": "./dist/select-library-styles.css",
-    "./select-library-styles.scss": "./dist/select-library-styles.scss"
+    "./select-library-styles.css": "./dist/simpSelect-library-styles.css",
+    "./select-library-styles.scss": "./dist/simpSelect-library-styles.scss"
   },
   "scripts": {
     "dev": "vite",
@@ -35,7 +36,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix"
   },
   "peerDependencies": {
-    "vue": "^3.2.31"
+    "vue": "^3.0.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.2",
