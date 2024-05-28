@@ -11,7 +11,7 @@
     "multiselect",
     "select with search"
   ],
-  "version": "0.0.1",
+  "version": "0.0.3",
   "files": [
     "dist"
   ],
@@ -23,8 +23,8 @@
       "import": "./dist/simpSelect-library.es.js",
       "require": "./dist/simpSelect-library.umd.js"
     },
-    "./select-library-styles.css": "./dist/simpSelect-library-styles.css",
-    "./select-library-styles.scss": "./dist/simpSelect-library-styles.scss"
+    "./simpSelect-library-styles.css": "./dist/simpSelect-library-styles.css",
+    "./simpSelect-library-styles.scss": "./dist/simpSelect-library-styles.scss"
   },
   "scripts": {
     "dev": "vite",
