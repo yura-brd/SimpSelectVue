@@ -28,6 +28,7 @@
       :locale="locale"
       :class-init="classInitItem"
       :callback="select"
+      :selected-count="localStore!.selectedCount.value"
     />
     <component
       :is="localStore!.componentSelectAllControlsReset"
@@ -35,6 +36,7 @@
       :locale="locale"
       :class-init="classInitItem"
       :callback="reset"
+      :selected-count="localStore!.selectedCount.value"
     />
   </div>
 </template>

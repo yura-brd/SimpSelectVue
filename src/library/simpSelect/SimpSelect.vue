@@ -1,7 +1,13 @@
 <script setup lang="ts">
-  import { defineModel, provide, readonly, ref, watch, onBeforeMount, nextTick } from "vue";
+  import { defineModel, provide, readonly, ref, watch, onBeforeMount, nextTick, computed } from "vue";
   import { useSlots } from "vue";
-  import type { ISimpleSelected, ISimpleSelectLocale, ISimpleSelectOption, optionsItemsType } from "./simpSelect.types";
+  import type {
+    ICheckedCountAndInfo,
+    ISimpleSelected,
+    ISimpleSelectLocale,
+    ISimpleSelectOption,
+    optionsItemsType,
+  } from "./simpSelect.types";
   import { simpleSelectLocale } from "./simpSelect.consts";
   import { equalModels, getClass, transformOptionWithGroup } from "./simpSelect.utils";
   import Top from "./components/Top/Top.vue";
@@ -112,6 +118,34 @@
   // const modelFullSelected = defineModel("fullSelected");
   const $wrapper = ref<HTMLDivElement | null>(null);
 
+  const optionsTransform = computed(() => transformOptionWithGroup(props.options));
+  const selectedCount = computed<ICheckedCountAndInfo>(() => {
+    const result = {
+      countChecked: 0,
+      countCheckedFull: 0, // only if value not empty
+      isMultiSelectedAll: "no",
+    };
+
+    if (!localSelected.value) {
+      return result;
+    }
+    if (!Array.isArray(localSelected.value)) {
+      result.countChecked = 1;
+      if (localSelected.value[props.keyValue]) {
+        result.countCheckedFull = 1;
+      }
+      return result;
+    } else {
+      result.countChecked = localSelected.value.length;
+      result.countCheckedFull = localSelected.value.filter(el => el[props.keyValue]).length;
+      if (localSelected.value.length === optionsTransform.value.length) {
+        result.isMultiSelectedAll = "yes";
+      }
+    }
+
+    return result;
+  });
+
   const searchText = ref<string>("");
   const setSearchText = (str?: string) => {
     searchText.value = str || "";
@@ -158,19 +192,6 @@
     },
     { immediate: true, deep: true },
   );
-  // watch(
-  //   () => props.options,
-  //   () => {
-  //     const res = updateLocalSelectedFull(model.value);
-  //     if (!res.length) {
-  //       localSelected.value = props.multiple ? [] : "";
-  //     }
-  //     if (modelFullSelected.value && !deepEqual(modelFullSelected.value, localSelectedFull.value)) {
-  //       modelFullSelected.value = cloneObj(localSelectedFull.value);
-  //     // }
-  //   },
-  //   { deep: true },
-  // );
   // TODO сделать сравнение, выбранных. Если не совпадают, обновить
   // watch(
   //   () => [localSelected, localSelectedFull],
@@ -318,6 +339,7 @@
     resetSelectedByDontConfirm,
     resetAll,
     selectAll,
+    selectedCount,
     componentItemListItem: slots.itemListItem || BodyListItem,
     componentItemListItemEmpty: slots.itemListItemEmpty || BodyListItemEmpty,
     componentTitle: slots.title || TopTitle,
@@ -342,6 +364,10 @@
 <template>
   <div
     ref="$wrapper"
+    :data-count-all="optionsTransform.length"
+    :data-count-checked="selectedCount.countChecked"
+    :data-count-checked-full="selectedCount.countCheckedFull"
+    :data-check-all-multi="selectedCount.isMultiSelectedAll"
     :class="[
       ['SimpleSel'],
       {

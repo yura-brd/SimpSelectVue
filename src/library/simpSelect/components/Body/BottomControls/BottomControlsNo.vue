@@ -2,7 +2,6 @@
   import { getClass } from "@/library/simpSelect/simpSelect.utils";
   import type { ISimpleSelectLocale } from "@/library/simpSelect/simpSelect.types";
 
-  defineEmits(["confirm", "cancellation"]);
   interface IProps {
     callback: () => void;
     classInit: string;

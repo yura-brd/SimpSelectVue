@@ -64,7 +64,7 @@
 <template>
   <div :class="[getClass('top')]">
     <div
-      v-if="!initAllProps?.isAlwaysOpen && !initAllProps?.isRemoveTop"
+      v-if="!initAllProps?.isRemoveTop"
       :class="[getClass('top_body')]"
       :tabindex="tabIndex"
       @click="$emit('setIsLocalOpen')"
@@ -81,7 +81,7 @@
         :options="initAllProps!.options"
       />
 
-      <component :is="localStore!.componentArrowIcon" v-if="!initAllProps?.isLoading" />
+      <component :is="localStore!.componentArrowIcon" v-if="!initAllProps?.isLoading && !initAllProps?.isAlwaysOpen" />
       <component :is="localStore!.componentLoading" v-if="initAllProps?.isLoading" />
     </div>
 

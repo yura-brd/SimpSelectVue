@@ -1,5 +1,5 @@
-import type { ISimpleSelected, ISimpleSelectOption } from "./simpSelect.types";
-import type { Component, Ref } from "vue";
+import type { ICheckedCountAndInfo, ISimpleSelected, ISimpleSelectOption } from "./simpSelect.types";
+import type { Component, ComputedRef, Ref } from "vue";
 export type setIsLocalOpenType = (isOpen?: boolean) => void;
 export type setToggleOptionType = (item: ISimpleSelectOption) => void;
 type updateOutsideModelsTypeProps = "ok" | "clickOutside" | "onBeforeMount" | "mainWatch" | "other";
@@ -19,6 +19,7 @@ export interface ILocalStoreStore {
     resetSelectedByDontConfirm: () => void;
     resetAll: (isConfirm: boolean) => void;
     selectAll: (isConfirm: boolean) => void;
+    selectedCount: ComputedRef<ICheckedCountAndInfo>;
     componentItemListItem: Component;
     componentItemListItemEmpty: Component;
     componentTitle: Component;

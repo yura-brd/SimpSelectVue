@@ -112,39 +112,39 @@
   <div class="wrapper">
     <div>
       <h2>Setting</h2>
-      <div>
-        <p>
-          <SettingToggleItem v-model="settingMultiple" title="multiple" />
+      <div class="items">
+        <p class="group">
+          <SettingToggleItem v-model="settingMultiple" title="Toggle multiple" />
         </p>
-        <p>
-          <SettingToggleItem v-model="settingDisabled" title="Disabled" />
+        <p class="group">
+          <SettingToggleItem v-model="settingDisabled" title="Toggle disabled" />
         </p>
-        <p>
-          <SettingToggleItem v-model="isFloat" title="isFloat" />
+        <p class="group">
+          <SettingToggleItem v-model="isFloat" title="Toggle is Float" />
         </p>
-        <p>
-          <SettingToggleItem v-model="isNative" title="is Native" />
+        <p class="group">
+          <SettingToggleItem v-model="isNative" title="Toggle is Native" />
         </p>
-        <p>
-          <SettingToggleItem v-model="isAlwaysOpen" title="isAlwaysOpen" />
+        <p class="group">
+          <SettingToggleItem v-model="isAlwaysOpen" title="Toggle is Always Open" />
         </p>
-        <p>
-          <SettingToggleItem v-model="isRemoveTop" title="remove top" />
+        <p class="group">
+          <SettingToggleItem v-model="isRemoveTop" title="Toggle remove top" />
         </p>
         <p>countShowSelected <input v-model="setting_countShowSelected" type="number" min="1" max="99" /></p>
-        <p><SettingToggleItem v-model="isLoading" title="loading" /></p>
-        <p><SettingToggleItem v-model="isConfirmInMulti" title="isConfirmInMulti" /></p>
-        <p><SettingToggleItem v-model="isUp" title="isUp" /></p>
-        <p>
-          <SettingToggleItem v-model="isSelectAll" title="isSelectAll" />
-          <SettingToggleItem v-model="isResetAll" title="isResetAll" />
+        <p class="group"><SettingToggleItem v-model="isLoading" title="Toggle loading" /></p>
+        <p class="group"><SettingToggleItem v-model="isConfirmInMulti" title="Toggle  is Confirm In Multi" /></p>
+        <p class="group"><SettingToggleItem v-model="isUp" title="Toggle  is Up" /></p>
+        <p class="group">
+          <SettingToggleItem v-model="isSelectAll" title="Toggle is Select All" />
+          <SettingToggleItem v-model="isResetAll" title="Toggle  is Reset All" />
         </p>
-        <p>
-          <SettingToggleItem v-model="isSearch" title="isSearch" />
-          <SettingToggleItem v-model="isSearchInDropdown" title="isSearchInDropdown" />
-          <SettingToggleItem v-model="isCloneTitleToSearch" title="isCloneTitleToSearch" />
+        <p class="group">
+          <SettingToggleItem v-model="isSearch" title="Toggle  is Search" />
+          <SettingToggleItem v-model="isSearchInDropdown" title="Toggle is Search In Dropdown" />
+          <SettingToggleItem v-model="isCloneTitleToSearch" title="Toggle is Clone Title To Search" />
         </p>
-        <p><SettingToggleItem v-model="isOnlyPlaceholder" title="isOnlyPlaceholder" /></p>
+        <p class="group"><SettingToggleItem v-model="isOnlyPlaceholder" title="Toggle is Only Placeholder" /></p>
 
         <p>
           <button @click="updateOptions">Set new Options</button>
@@ -202,7 +202,7 @@
 :key-value="'value_id'"
 :key-title="'name_title'"</pre
       >
-<!--      <SimpSelect :options="optionsCustomKeys" :key-value="'value_id'" :key-title="'name_title'" :is-up="true" />-->
+      <SimpSelect :options="optionsCustomKeys" :key-value="'value_id'" :key-title="'name_title'" :is-up="true" />
     </div>
   </div>
 </template>
@@ -219,5 +219,19 @@
   }
   .select {
     width: 100%;
+  }
+
+  .items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px 10px;
+
+    & > p {
+      margin: 0;
+    }
+  }
+  .group {
+    display: flex;
+    gap: 5px;
   }
 </style>

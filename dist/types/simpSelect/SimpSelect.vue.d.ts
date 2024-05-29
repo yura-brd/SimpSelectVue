@@ -1,4 +1,4 @@
-import type { ISimpleSelectLocale, optionsItemsType } from "./simpSelect.types";
+import type { ISimpleSelectLocale, optionsItemsType } from './simpSelect.types';
 import type { setIsLocalOpenType } from "@/library/simpSelect/simpSelect.local.types";
 export interface ISimpleSelectProps {
     options: optionsItemsType;
@@ -99,9 +99,9 @@ declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_T
     disabled: boolean;
     searchTypeInput: string;
     titleMain: string;
-    isAlwaysOpen: boolean;
     isRemoveTop: boolean;
     isLoading: boolean;
+    isAlwaysOpen: boolean;
     isSearch: boolean;
     isSearchInDropdown: boolean;
     isFloat: boolean;

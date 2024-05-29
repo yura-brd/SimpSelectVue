@@ -88,13 +88,15 @@
   const resetAll = () => {
     localStore?.resetAll(!!initAllProps?.resetAllAfterClose);
   };
+  const initClass = getClass("body");
 </script>
 
 <template>
   <div
     :class="[
-      getClass('body'),
+      initClass,
       {
+        [getClass('toggle_open', true, initClass)]: !initAllProps?.isAlwaysOpen,
         [getClass('body-always_open', true)]: initAllProps?.isAlwaysOpen,
       },
     ]"

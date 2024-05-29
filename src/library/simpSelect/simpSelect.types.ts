@@ -37,4 +37,10 @@ export interface ISimpleSelectOption {
   [key: string]: any;
 }
 
+export interface ICheckedCountAndInfo {
+  countChecked: number;
+  countCheckedFull: number;
+  isMultiSelectedAll: "no" | "yes";
+}
+
 export interface IPropsSimpSelectTopTopTitle extends IPropsSimpSelectTopTitleLocal {}

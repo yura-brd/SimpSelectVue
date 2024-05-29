@@ -14,7 +14,7 @@
 </script>
 
 <template>
-  <button @click="toggle">{{ title }} {{ model ? "YES" : "NO" }}</button>
+  <button @click="toggle">{{ title }}: {{ model ? "YES" : "NO" }}</button>
 </template>
 
 <style lang="scss"></style>
