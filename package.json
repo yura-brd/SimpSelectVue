@@ -2,7 +2,7 @@
   "name": "vue-simp-select",
   "license": "MIT",
   "homepage": "",
-  "author": "Yurii K.",
+	"author": "Yurii Kopot <yura.brd@gmail.com>",
   "keywords": [
     "vue",
     "vue3",
@@ -11,7 +11,7 @@
     "multiselect",
     "select with search"
   ],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "files": [
     "dist"
   ],
@@ -26,7 +26,12 @@
     "./simpSelect-library-styles.css": "./dist/simpSelect-library-styles.css",
     "./simpSelect-library-styles.scss": "./dist/simpSelect-library-styles.scss"
   },
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/yura-brd/SimpSelectVue"
+	},
   "scripts": {
+		"publish-run": "npm publish",
     "dev": "vite",
     "dev-host": "vite --host",
     "build:library": "ts-node --skipProject buildLibrary.ts",

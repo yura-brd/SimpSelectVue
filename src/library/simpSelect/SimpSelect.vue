@@ -70,6 +70,9 @@
 
     isNative?: boolean;
     isFloat?: boolean;
+
+    isScrollToCheckedFirst?: boolean;
+    isScrollToCheckedAlways?: boolean;
   }
   const slots = useSlots();
 
@@ -101,6 +104,9 @@
     isSearch: true,
     isSearchInDropdown: false,
 
+    isScrollToCheckedFirst: true,
+    isScrollToCheckedAlways: false,
+
     isFloat: false,
 
     keyValue: "value",
@@ -117,6 +123,8 @@
   });
   // const modelFullSelected = defineModel("fullSelected");
   const $wrapper = ref<HTMLDivElement | null>(null);
+
+  const isFirstOpened = ref<boolean>(false);
 
   const optionsTransform = computed(() => transformOptionWithGroup(props.options));
   const selectedCount = computed<ICheckedCountAndInfo>(() => {
@@ -171,6 +179,11 @@
     }
   };
   watch(isLocalOpen, newVal => {
+    if (!isFirstOpened.value) {
+      nextTick(() => {
+        isFirstOpened.value = true;
+      });
+    }
     if (newVal) {
       emits("callbackOpen");
     } else {
@@ -339,6 +352,7 @@
     resetSelectedByDontConfirm,
     resetAll,
     selectAll,
+    isFirstOpened,
     selectedCount,
     componentItemListItem: slots.itemListItem || BodyListItem,
     componentItemListItemEmpty: slots.itemListItemEmpty || BodyListItemEmpty,

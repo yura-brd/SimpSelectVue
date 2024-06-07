@@ -11,7 +11,7 @@
   };
   // const modelFull = ref();
 
-  const model = ref<any>({ value: "1", name: "11" });
+  const model = ref<any>({ value: "8", name: "88" });
   const options = ref<any>([
     { value: "1", name: "11" },
     { value: "2", name: "22" },
@@ -19,6 +19,10 @@
     { value: "4", name: "44" },
     { value: "5", name: "55" },
     { value: "6", name: "66" },
+    { value: "7", name: "77" },
+    { value: "8", name: "88" },
+    { value: "9", name: "99" },
+    { value: "10", name: "10" },
   ]);
 
   const optionsCustomKeys = ref<any>([

@@ -22,6 +22,8 @@ export interface ILocalStoreStore {
   updateOutsideModels: updateOutsideModelsType;
   resetSelectedByDontConfirm: () => void;
 
+  isFirstOpened: Ref<boolean>;
+
   resetAll: (isConfirm: boolean) => void;
   selectAll: (isConfirm: boolean) => void;
 

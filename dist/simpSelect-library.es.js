@@ -1,4 +1,4 @@
-import { defineComponent, ref, inject, computed, watch, withDirectives, openBlock, createElementBlock, normalizeClass, unref, vModelDynamic, withKeys, withModifiers, createBlock, resolveDynamicComponent, createCommentVNode, Fragment, renderList, createElementVNode, toDisplayString, createVNode, createTextVNode, mergeModels, useModel, vModelSelect, useSlots, provide, readonly, onBeforeMount, nextTick } from "vue";
+import { defineComponent, ref, inject, computed, watch, withDirectives, openBlock, createElementBlock, normalizeClass, unref, vModelDynamic, withKeys, withModifiers, createBlock, resolveDynamicComponent, createCommentVNode, Fragment, renderList, createElementVNode, toDisplayString, createVNode, createTextVNode, mergeModels, useModel, vModelSelect, useSlots, provide, readonly, nextTick, onBeforeMount } from "vue";
 const simpleSelectLocale = {
   noSearch: "No matches for",
   searchText: "Search",
@@ -234,8 +234,8 @@ const _sfc_main$f = defineComponent({
 });
 const _hoisted_1$5 = { class: "SimpleSel__group_title" };
 const _hoisted_2$3 = { class: "SimpleSel__group" };
-const _hoisted_3$1 = ["tabindex", "onKeyup", "onClick"];
-const _hoisted_4$1 = ["tabindex", "onKeyup", "onClick"];
+const _hoisted_3$1 = ["tabindex", "data-sel-opt-checked", "onKeyup", "onClick"];
+const _hoisted_4$1 = ["tabindex", "data-sel-opt-checked", "onKeyup", "onClick"];
 const _sfc_main$e = defineComponent({
   __name: "BodyList",
   setup(__props) {
@@ -330,7 +330,7 @@ const _sfc_main$e = defineComponent({
         }, [
           (openBlock(), createBlock(resolveDynamicComponent(unref(localStore).componentItemListItemEmpty)))
         ], 2)) : (openBlock(true), createElementBlock(Fragment, { key: 1 }, renderList(itemFilter.value, (group, index) => {
-          var _a;
+          var _a, _b;
           return openBlock(), createElementBlock(Fragment, { key: index }, [
             group.isOptgroupSelect ? (openBlock(), createElementBlock("li", {
               key: 0,
@@ -339,18 +339,19 @@ const _sfc_main$e = defineComponent({
               createElementVNode("div", _hoisted_1$5, toDisplayString(group.label), 1),
               createElementVNode("ul", _hoisted_2$3, [
                 (openBlock(true), createElementBlock(Fragment, null, renderList(group.items, (item, ind) => {
-                  var _a2;
+                  var _a2, _b2;
                   return openBlock(), createElementBlock("li", {
                     key: item.valueOf() + "_" + ind,
                     ref_for: true,
                     ref_key: "itemsOption",
                     ref: itemsOption,
                     tabindex: index === activePosition.value ? 0 : -1,
+                    "data-sel-opt-checked": ((_a2 = unref(localStore)) == null ? void 0 : _a2.getSelected(item)) ? "true" : "false",
                     class: normalizeClass([
                       ["SimpleSel__list_item"],
                       {
                         "SimpleSel__list_item--disabled": item.disabled || group.disabled,
-                        "SimpleSel__list_item--checked": (_a2 = unref(localStore)) == null ? void 0 : _a2.getSelected(item)
+                        "SimpleSel__list_item--checked": (_b2 = unref(localStore)) == null ? void 0 : _b2.getSelected(item)
                       }
                     ]),
                     onKeyup: withKeys(withModifiers(($event) => selectedItem($event, item, group), ["prevent", "stop"]), ["enter"]),
@@ -369,10 +370,11 @@ const _sfc_main$e = defineComponent({
               ref_key: "itemsOption",
               ref: itemsOption,
               tabindex: index === activePosition.value ? 0 : -1,
+              "data-sel-opt-checked": ((_a = unref(localStore)) == null ? void 0 : _a.getSelected(group)) ? "true" : "false",
               class: normalizeClass([
                 ["SimpleSel__list_item"],
                 {
-                  "SimpleSel__list_item--checked": (_a = unref(localStore)) == null ? void 0 : _a.getSelected(group),
+                  "SimpleSel__list_item--checked": (_b = unref(localStore)) == null ? void 0 : _b.getSelected(group),
                   "SimpleSel__list_item--disabled": group.disabled
                 }
               ]),
@@ -397,6 +399,7 @@ const _sfc_main$d = defineComponent({
     const localStore = inject(keyInjectLocalStore);
     const activePosition = ref(null);
     const itemsOption = ref([]);
+    const $body = ref();
     const toggleOpenBodyClass = getClass("body_open", true);
     const closeClickOutside = (e) => {
       var _a;
@@ -433,6 +436,14 @@ const _sfc_main$d = defineComponent({
         if (initAllProps == null ? void 0 : initAllProps.isFloat) {
           (_a = document == null ? void 0 : document.body) == null ? void 0 : _a.classList.toggle(toggleOpenBodyClass, newVal);
         }
+        if (newVal) {
+          if (!(localStore == null ? void 0 : localStore.isFirstOpened.value) && (initAllProps == null ? void 0 : initAllProps.isScrollToCheckedFirst) && !(initAllProps == null ? void 0 : initAllProps.isScrollToCheckedAlways)) {
+            scrollToFirstChecked();
+          }
+          if (initAllProps == null ? void 0 : initAllProps.isScrollToCheckedAlways) {
+            scrollToFirstChecked();
+          }
+        }
         if (typeof window !== "undefined") {
           if (newVal) {
             document == null ? void 0 : document.addEventListener("click", closeClickOutside);
@@ -449,6 +460,14 @@ const _sfc_main$d = defineComponent({
         immediate: true
       }
     );
+    const scrollToFirstChecked = () => {
+      if ($body.value) {
+        const firstChecked = $body.value.querySelector('[data-sel-opt-checked="true"]');
+        if (firstChecked) {
+          $body.value.scrollTop = firstChecked.offsetTop;
+        }
+      }
+    };
     watch(activePosition, (newVal) => {
       if (!newVal && newVal !== 0) {
         return;
@@ -476,6 +495,8 @@ const _sfc_main$d = defineComponent({
     return (_ctx, _cache) => {
       var _a, _b, _c, _d, _e, _f, _g;
       return openBlock(), createElementBlock("div", {
+        ref_key: "$body",
+        ref: $body,
         class: normalizeClass([
           unref(initClass2),
           {
@@ -894,7 +915,9 @@ const _sfc_main = defineComponent({
     isUp: { type: Boolean, default: false },
     isLoading: { type: Boolean, default: false },
     isNative: { type: Boolean, default: false },
-    isFloat: { type: Boolean, default: false }
+    isFloat: { type: Boolean, default: false },
+    isScrollToCheckedFirst: { type: Boolean, default: true },
+    isScrollToCheckedAlways: { type: Boolean, default: false }
   }, {
     "modelValue": {
       default: null
@@ -909,6 +932,7 @@ const _sfc_main = defineComponent({
     const emits = __emit;
     const model = useModel(__props, "modelValue");
     const $wrapper = ref(null);
+    const isFirstOpened = ref(false);
     const optionsTransform = computed(() => transformOptionWithGroup(props.options));
     const selectedCount = computed(() => {
       const result = {
@@ -957,6 +981,11 @@ const _sfc_main = defineComponent({
       }
     };
     watch(isLocalOpen, (newVal) => {
+      if (!isFirstOpened.value) {
+        nextTick(() => {
+          isFirstOpened.value = true;
+        });
+      }
       if (newVal) {
         emits("callbackOpen");
       } else {
@@ -1089,6 +1118,7 @@ const _sfc_main = defineComponent({
       resetSelectedByDontConfirm,
       resetAll,
       selectAll,
+      isFirstOpened,
       selectedCount,
       componentItemListItem: slots.itemListItem || _sfc_main$c,
       componentItemListItemEmpty: slots.itemListItemEmpty || _sfc_main$1,

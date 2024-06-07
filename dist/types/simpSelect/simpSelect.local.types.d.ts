@@ -17,6 +17,7 @@ export interface ILocalStoreStore {
     setToggleOption: setToggleOptionType;
     updateOutsideModels: updateOutsideModelsType;
     resetSelectedByDontConfirm: () => void;
+    isFirstOpened: Ref<boolean>;
     resetAll: (isConfirm: boolean) => void;
     selectAll: (isConfirm: boolean) => void;
     selectedCount: ComputedRef<ICheckedCountAndInfo>;

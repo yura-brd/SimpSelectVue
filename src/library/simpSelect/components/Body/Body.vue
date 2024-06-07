@@ -14,6 +14,8 @@
   const activePosition = ref<number | null>(null);
   const itemsOption = ref<HTMLElement[]>([]);
 
+  const $body = ref<HTMLElement>();
+
   const toggleOpenBodyClass = getClass("body_open", true);
 
   const closeClickOutside = (e: Event) => {
@@ -48,6 +50,20 @@
       if (initAllProps?.isFloat) {
         document?.body?.classList.toggle(toggleOpenBodyClass, newVal);
       }
+
+      if (newVal) {
+        if (
+          !localStore?.isFirstOpened.value &&
+          initAllProps?.isScrollToCheckedFirst &&
+          !initAllProps?.isScrollToCheckedAlways
+        ) {
+          scrollToFirstChecked();
+        }
+        if (initAllProps?.isScrollToCheckedAlways) {
+          scrollToFirstChecked();
+        }
+      }
+
       if (typeof window !== "undefined") {
         if (newVal) {
           document?.addEventListener("click", closeClickOutside);
@@ -64,6 +80,15 @@
       immediate: !0,
     },
   );
+  const scrollToFirstChecked = () => {
+    if ($body.value) {
+      const firstChecked: HTMLElement | null = $body.value.querySelector('[data-sel-opt-checked="true"]');
+      if (firstChecked) {
+        $body.value.scrollTop = firstChecked.offsetTop;
+      }
+    }
+  };
+
   watch(activePosition, newVal => {
     if (!newVal && newVal !== 0) {
       return;
@@ -93,6 +118,7 @@
 
 <template>
   <div
+    ref="$body"
     :class="[
       initClass,
       {

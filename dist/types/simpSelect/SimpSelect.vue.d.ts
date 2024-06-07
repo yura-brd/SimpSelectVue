@@ -1,4 +1,4 @@
-import type { ISimpleSelectLocale, optionsItemsType } from './simpSelect.types';
+import type { ISimpleSelectLocale, optionsItemsType } from "./simpSelect.types";
 import type { setIsLocalOpenType } from "@/library/simpSelect/simpSelect.local.types";
 export interface ISimpleSelectProps {
     options: optionsItemsType;
@@ -29,6 +29,8 @@ export interface ISimpleSelectProps {
     isLoading?: boolean;
     isNative?: boolean;
     isFloat?: boolean;
+    isScrollToCheckedFirst?: boolean;
+    isScrollToCheckedAlways?: boolean;
 }
 declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<ISimpleSelectProps>, {
     multiple: boolean;
@@ -54,6 +56,8 @@ declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_T
     searchTypeInput: string;
     isSearch: boolean;
     isSearchInDropdown: boolean;
+    isScrollToCheckedFirst: boolean;
+    isScrollToCheckedAlways: boolean;
     isFloat: boolean;
     keyValue: string;
     keyTitle: string;
@@ -84,6 +88,8 @@ declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_T
     searchTypeInput: string;
     isSearch: boolean;
     isSearchInDropdown: boolean;
+    isScrollToCheckedFirst: boolean;
+    isScrollToCheckedAlways: boolean;
     isFloat: boolean;
     keyValue: string;
     keyTitle: string;
@@ -106,9 +112,11 @@ declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_T
     isSearchInDropdown: boolean;
     isFloat: boolean;
     isConfirmInMulti: boolean;
+    isScrollToCheckedFirst: boolean;
+    isScrollToCheckedAlways: boolean;
+    multiple: boolean;
     selectAll: boolean;
     resetAll: boolean;
-    multiple: boolean;
     isSimpleShowCheckbox: boolean;
     isCloneTitleToSearch: boolean;
     searchFieldsKeys: string[];

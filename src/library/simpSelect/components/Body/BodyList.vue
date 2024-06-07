@@ -113,6 +113,7 @@
             :key="item.valueOf() + '_' + ind"
             ref="itemsOption"
             :tabindex="index === activePosition ? 0 : -1"
+            :data-sel-opt-checked="localStore?.getSelected(item) ? 'true' : 'false'"
             :class="[
               ['SimpleSel__list_item'],
               {
@@ -132,6 +133,7 @@
           :key="group.valueOf() + '_' + group"
           ref="itemsOption"
           :tabindex="index === activePosition ? 0 : -1"
+          :data-sel-opt-checked="localStore?.getSelected(group) ? 'true' : 'false'"
           :class="[
             ['SimpleSel__list_item'],
             {
