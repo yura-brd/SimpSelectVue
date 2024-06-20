@@ -78,6 +78,9 @@ const deepEqual = (object1, object2) => {
 function isObject(object) {
   return object != null && typeof object === "object";
 }
+const formatedStringToSearch = (str) => {
+  return str.toLowerCase();
+};
 const keyInjectPropsAll = Symbol();
 const keyInjectLocalStore = Symbol();
 const _hoisted_1$7 = ["type", "tabindex", "placeholder"];
@@ -296,7 +299,7 @@ const _sfc_main$e = defineComponent({
           if (!(key in item)) {
             return;
           }
-          if (item[key].includes(searchText)) {
+          if (formatedStringToSearch(item[key]).includes(searchText)) {
             res = true;
           }
         });
@@ -960,7 +963,11 @@ const _sfc_main = defineComponent({
     });
     const searchText = ref("");
     const setSearchText = (str) => {
-      searchText.value = str || "";
+      if (!str) {
+        searchText.value = "";
+        return;
+      }
+      searchText.value = formatedStringToSearch(str);
     };
     const titleText = ref({
       fullString: props.titleMain,
@@ -1056,7 +1063,7 @@ const _sfc_main = defineComponent({
     });
     watch(
       localSelected,
-      (newVal) => {
+      () => {
         if (!props.isConfirmInMulti) {
           updateOutsideModels();
         }

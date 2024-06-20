@@ -91,3 +91,7 @@ export const deepEqual = (object1: Record<string, any>, object2: Record<string, 
 function isObject(object: any) {
   return object != null && typeof object === "object";
 }
+
+export const formatedStringToSearch = (str: string): string => {
+  return str.toLowerCase();
+};

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { getClass, transformOptionWithGroup } from "@/library/simpSelect/simpSelect.utils";
+  import { formatedStringToSearch, getClass, transformOptionWithGroup } from "@/library/simpSelect/simpSelect.utils";
   import { computed, type ComputedRef, inject, ref, watch } from "vue";
   import { keyInjectLocalStore, keyInjectPropsAll } from "@/library/simpSelect/simpSelect.keys";
   import type { ISimpleSelectOption, ISimpleSelectOptionGroup } from "../../simpSelect.types";
@@ -68,7 +68,8 @@
         if (!(key in item)) {
           return;
         }
-        if (item[key].includes(searchText)) {
+
+        if (formatedStringToSearch(item[key]).includes(searchText)) {
           res = true;
         }
       });

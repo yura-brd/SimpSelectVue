@@ -9,7 +9,7 @@
     optionsItemsType,
   } from "./simpSelect.types";
   import { simpleSelectLocale } from "./simpSelect.consts";
-  import { equalModels, getClass, transformOptionWithGroup } from "./simpSelect.utils";
+  import { equalModels, formatedStringToSearch, getClass, transformOptionWithGroup } from "./simpSelect.utils";
   import Top from "./components/Top/Top.vue";
   import type {
     ILocalStoreStore,
@@ -127,6 +127,7 @@
   const isFirstOpened = ref<boolean>(false);
 
   const optionsTransform = computed(() => transformOptionWithGroup(props.options));
+
   const selectedCount = computed<ICheckedCountAndInfo>(() => {
     const result = {
       countChecked: 0,
@@ -156,7 +157,11 @@
 
   const searchText = ref<string>("");
   const setSearchText = (str?: string) => {
-    searchText.value = str || "";
+    if (!str) {
+      searchText.value = "";
+      return;
+    }
+    searchText.value = formatedStringToSearch(str);
   };
 
   const titleText = ref<ITitleResult>({
@@ -285,7 +290,7 @@
 
   watch(
     localSelected,
-    newVal => {
+    () => {
       // updateLocalSelectedFull(newVal);
       if (!props.isConfirmInMulti) {
         updateOutsideModels("mainWatch");

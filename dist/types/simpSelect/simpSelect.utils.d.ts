@@ -5,3 +5,4 @@ export declare const cloneObj: <T>(obj: T) => T;
 export declare const transformOptionWithGroup: (options: ISimpleSelectOption[] | ISimpleSelectOptionGroup[]) => ISimpleSelectOption[];
 export declare const equalModels: (model1: ISimpleSelected, model2: ISimpleSelected, key: string) => boolean;
 export declare const deepEqual: (object1: Record<string, any>, object2: Record<string, any>) => boolean;
+export declare const formatedStringToSearch: (str: string) => string;

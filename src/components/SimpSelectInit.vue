@@ -13,8 +13,8 @@
 
   const model = ref<any>({ value: "8", name: "88" });
   const options = ref<any>([
-    { value: "1", name: "11" },
-    { value: "2", name: "22" },
+    { value: "1", name: "First" },
+    { value: "2", name: "SeConD" },
     { value: "3", name: "33" },
     { value: "4", name: "44" },
     { value: "5", name: "55" },
