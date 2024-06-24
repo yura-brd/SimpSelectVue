@@ -1,4 +1,4 @@
-import { defineComponent, ref, inject, computed, watch, withDirectives, openBlock, createElementBlock, normalizeClass, unref, vModelDynamic, withKeys, withModifiers, createBlock, resolveDynamicComponent, createCommentVNode, Fragment, renderList, createElementVNode, toDisplayString, createVNode, createTextVNode, mergeModels, useModel, vModelSelect, useSlots, provide, readonly, nextTick, onBeforeMount } from "vue";
+import { defineComponent, ref, inject, computed, watch, withDirectives, openBlock, createElementBlock, normalizeClass, unref, vModelDynamic, withKeys, withModifiers, createBlock, resolveDynamicComponent, createCommentVNode, Fragment, renderList, createElementVNode, toDisplayString, createVNode, createTextVNode, mergeModels, useSlots, provide, readonly, useModel, nextTick, onBeforeMount } from "vue";
 const simpleSelectLocale = {
   noSearch: "No matches for",
   searchText: "Search",
@@ -791,25 +791,17 @@ const _hoisted_3 = ["selected", "disabled", "value"];
 const _hoisted_4 = ["selected", "disabled", "value"];
 const _sfc_main$4 = defineComponent({
   __name: "NativeSelect",
-  props: {
-    "modelValue": {
-      default: null
-    },
-    "modelModifiers": {}
-  },
-  emits: /* @__PURE__ */ mergeModels(["changeHandler"], ["update:modelValue"]),
+  emits: ["changeHandler"],
   setup(__props, { emit: __emit }) {
     const emits = __emit;
     const initAllProps = inject(keyInjectPropsAll);
     const localStore = inject(keyInjectLocalStore);
-    const model = useModel(__props, "modelValue");
     const changeHandler = (e) => {
       emits("changeHandler", e);
     };
     const initClass2 = getClass("select_init");
     return (_ctx, _cache) => {
-      return withDirectives((openBlock(), createElementBlock("select", {
-        "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => model.value = $event),
+      return openBlock(), createElementBlock("select", {
         tabindex: -1,
         disabled: unref(initAllProps).disabled,
         class: normalizeClass([unref(initClass2), unref(getClass)("native", true, unref(initClass2))]),
@@ -839,9 +831,7 @@ const _sfc_main$4 = defineComponent({
             }, toDisplayString(group[unref(initAllProps).keyTitle]), 9, _hoisted_4))
           ], 64);
         }), 128))
-      ], 42, _hoisted_1$1)), [
-        [vModelSelect, model.value]
-      ]);
+      ], 42, _hoisted_1$1);
     };
   }
 });
@@ -1156,7 +1146,7 @@ const _sfc_main = defineComponent({
             [unref(getClass)("multi", true)]: _ctx.multiple,
             [unref(getClass)("single", true)]: !_ctx.multiple,
             [unref(getClass)("body-always_open", true)]: _ctx.isAlwaysOpen,
-            [unref(getClass)("float", true)]: _ctx.isFloat,
+            [unref(getClass)("float", true)]: _ctx.isFloat && !_ctx.isNative,
             [unref(getClass)("disabled", true)]: _ctx.disabled,
             [unref(getClass)("open", true)]: isLocalOpen.value,
             [unref(getClass)("up", true)]: _ctx.isUp,

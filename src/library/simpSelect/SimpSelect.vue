@@ -393,7 +393,7 @@
         [getClass('multi', true)]: multiple,
         [getClass('single', true)]: !multiple,
         [getClass('body-always_open', true)]: isAlwaysOpen,
-        [getClass('float', true)]: isFloat,
+        [getClass('float', true)]: isFloat && !isNative,
         [getClass('disabled', true)]: disabled,
         [getClass('open', true)]: isLocalOpen,
         [getClass('up', true)]: isUp,

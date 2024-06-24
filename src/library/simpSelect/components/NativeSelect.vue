@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  import { defineModel, inject } from "vue";
+  import { inject } from "vue";
   import { keyInjectLocalStore, keyInjectPropsAll } from "@/library/simpSelect/simpSelect.keys";
   import type { ILocalStoreStore } from "../simpSelect.local.types";
   import type { ISimpleSelectProps } from "@/library/simpSelect/SimpSelect.vue";
-  import type { ISimpleSelected, ISimpleSelectOption } from "../simpSelect.types";
+  import type { ISimpleSelectOption } from "../simpSelect.types";
   import { getClass } from "@/library/simpSelect/simpSelect.utils";
 
   const emits = defineEmits(["changeHandler"]);
@@ -11,9 +11,9 @@
 
   const localStore = inject<ILocalStoreStore>(keyInjectLocalStore);
 
-  const model = defineModel<ISimpleSelected>({
-    default: null,
-  });
+  // const model = defineModel<ISimpleSelected>({
+  //   default: null,
+  // });
   const changeHandler = (e: Event) => {
     emits("changeHandler", e);
   };
@@ -22,7 +22,6 @@
 
 <template>
   <select
-    v-model="model"
     :tabindex="-1"
     :disabled="initAllProps!.disabled"
     :class="[initClass, getClass('native', true, initClass)]"
