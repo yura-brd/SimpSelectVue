@@ -229,6 +229,29 @@
 
   const changeHandler = (e: Event) => {
     const target = e.target as HTMLSelectElement;
+    changeHandlerSelect(target);
+    // if (props.multiple) {
+    //   const optionsRes: string[] = [];
+    //   for (let i = 0; i < target.options.length; i++) {
+    //     const option = target.options[i];
+    //     if (option.selected) {
+    //       optionsRes.push(option.value);
+    //     }
+    //   }
+    //   localSelected.value = transformOptionWithGroup(props.options).filter(optionItem =>
+    //     optionsRes.includes(optionItem[props.keyValue]),
+    //   );
+    // } else {
+    //   const selected = transformOptionWithGroup(props.options).filter(
+    //     optionItem => optionItem[props.keyValue] === target.value,
+    //   )[0];
+    //   localSelected.value = selected || null;
+    // }
+    // nextTick(() => {
+    //   updateOutsideModels("other");
+    // });
+  };
+  const changeHandlerSelect = (target: HTMLSelectElement) => {
     if (props.multiple) {
       const optionsRes: string[] = [];
       for (let i = 0; i < target.options.length; i++) {
@@ -402,7 +425,12 @@
       },
     ]"
   >
-    <NativeSelect v-if="props.isNative" v-model="model" @change-handler="changeHandler" />
+    <NativeSelect
+      v-if="props.isNative"
+      v-model="model"
+      @change-handler="changeHandler"
+      @change-select-handler="changeHandlerSelect"
+    />
 
     <Top @set-is-local-open="setIsLocalOpen" />
     <Body v-if="!props.isNative" />

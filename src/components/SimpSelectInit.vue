@@ -12,6 +12,7 @@
   // const modelFull = ref();
 
   const model = ref<any>({ value: "8", name: "88" });
+  // const model = ref<any>();
   const options = ref<any>([
     { value: "1", name: "First" },
     { value: "2", name: "SeConD" },

@@ -1,4 +1,4 @@
-import { defineComponent, ref, inject, computed, watch, withDirectives, openBlock, createElementBlock, normalizeClass, unref, vModelDynamic, withKeys, withModifiers, createBlock, resolveDynamicComponent, createCommentVNode, Fragment, renderList, createElementVNode, toDisplayString, createVNode, createTextVNode, mergeModels, useSlots, provide, readonly, useModel, nextTick, onBeforeMount } from "vue";
+import { defineComponent, ref, inject, computed, watch, withDirectives, openBlock, createElementBlock, normalizeClass, unref, vModelDynamic, withKeys, withModifiers, createBlock, resolveDynamicComponent, createCommentVNode, Fragment, renderList, createElementVNode, toDisplayString, createVNode, createTextVNode, mergeModels, useModel, onMounted, useSlots, provide, readonly, nextTick, onBeforeMount } from "vue";
 const simpleSelectLocale = {
   noSearch: "No matches for",
   searchText: "Search",
@@ -791,17 +791,36 @@ const _hoisted_3 = ["selected", "disabled", "value"];
 const _hoisted_4 = ["selected", "disabled", "value"];
 const _sfc_main$4 = defineComponent({
   __name: "NativeSelect",
-  emits: ["changeHandler"],
+  props: {
+    "modelValue": {
+      default: null
+    },
+    "modelModifiers": {}
+  },
+  emits: /* @__PURE__ */ mergeModels(["changeHandler", "changeSelectHandler"], ["update:modelValue"]),
   setup(__props, { emit: __emit }) {
     const emits = __emit;
     const initAllProps = inject(keyInjectPropsAll);
     const localStore = inject(keyInjectLocalStore);
+    const selectElem = ref(null);
+    const model = useModel(__props, "modelValue");
     const changeHandler = (e) => {
       emits("changeHandler", e);
     };
     const initClass2 = getClass("select_init");
+    onMounted(() => {
+      if (!selectElem.value) {
+        return;
+      }
+      if (selectElem.value.value && !model.value) {
+        emits("changeSelectHandler", selectElem.value);
+        console.error("Value native select not matches with model");
+      }
+    });
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("select", {
+        ref_key: "selectElem",
+        ref: selectElem,
         tabindex: -1,
         disabled: unref(initAllProps).disabled,
         class: normalizeClass([unref(initClass2), unref(getClass)("native", true, unref(initClass2))]),
@@ -1001,6 +1020,9 @@ const _sfc_main = defineComponent({
     );
     const changeHandler = (e) => {
       const target = e.target;
+      changeHandlerSelect(target);
+    };
+    const changeHandlerSelect = (target) => {
       if (props.multiple) {
         const optionsRes = [];
         for (let i = 0; i < target.options.length; i++) {
@@ -1159,7 +1181,8 @@ const _sfc_main = defineComponent({
           key: 0,
           modelValue: model.value,
           "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => model.value = $event),
-          onChangeHandler: changeHandler
+          onChangeHandler: changeHandler,
+          onChangeSelectHandler: changeHandlerSelect
         }, null, 8, ["modelValue"])) : createCommentVNode("", true),
         createVNode(_sfc_main$f, { onSetIsLocalOpen: setIsLocalOpen }),
         !props.isNative ? (openBlock(), createBlock(_sfc_main$d, { key: 1 })) : createCommentVNode("", true)
