@@ -241,9 +241,10 @@
         optionsRes.includes(optionItem[props.keyValue]),
       );
     } else {
-      localSelected.value = transformOptionWithGroup(props.options).filter(
-        optionItem => optionItem[props.keyValue] === target.value,
-      );
+      const selected = transformOptionWithGroup(props.options).filter(
+        optionItem => optionItem[props.keyValue] === target.value && false,
+      )[0];
+      localSelected.value = selected || null;
     }
     nextTick(() => {
       updateOutsideModels("other");
