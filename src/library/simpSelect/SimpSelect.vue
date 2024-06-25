@@ -242,7 +242,7 @@
       );
     } else {
       const selected = transformOptionWithGroup(props.options).filter(
-        optionItem => optionItem[props.keyValue] === target.value && false,
+        optionItem => optionItem[props.keyValue] === target.value,
       )[0];
       localSelected.value = selected || null;
     }
