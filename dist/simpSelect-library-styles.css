@@ -137,7 +137,7 @@
   justify-content: space-between;
   cursor: pointer;
 }
-.SimpleSel__top_body .SimpleSel__top_body {
+.SimpleSel--disabled .SimpleSel__top_body {
   cursor: default;
   user-select: none;
 }
