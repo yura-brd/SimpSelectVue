@@ -11,7 +11,7 @@
     "multiselect",
     "select with search"
   ],
-  "version": "1.0.6",
+  "version": "1.0.7",
   "files": [
     "dist"
   ],
