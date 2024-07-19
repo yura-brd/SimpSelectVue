@@ -245,30 +245,8 @@ const _sfc_main$e = defineComponent({
   setup(__props) {
     const initAllProps = inject(keyInjectPropsAll);
     const localStore = inject(keyInjectLocalStore);
-    const localOptionItems = ref(transformOptionWithGroup(initAllProps.options));
     const activePosition = ref(null);
     const itemsOption = ref([]);
-    const keyUpList = (e) => {
-      const optionsLength = localOptionItems.value.length;
-      if (e.key === "ArrowUp") {
-        e.preventDefault();
-        if (activePosition.value === null) {
-          activePosition.value = optionsLength - 1;
-          return;
-        }
-        activePosition.value = activePosition.value - 1 >= 0 ? activePosition.value - 1 : optionsLength - 1;
-        return;
-      }
-      if (e.key === "ArrowDown") {
-        e.preventDefault();
-        if (activePosition.value === null) {
-          activePosition.value = 0;
-          return;
-        }
-        activePosition.value = activePosition.value + 1 < optionsLength ? activePosition.value + 1 : 0;
-        return;
-      }
-    };
     const keyUpListEnter = () => {
       if (activePosition.value === null) {
         activePosition.value = 0;
@@ -289,7 +267,6 @@ const _sfc_main$e = defineComponent({
         if (!newVal) {
           activePosition.value = null;
         }
-        console.log("yura newVal", newVal);
       }
     );
     const changeItemHandler = (e, item) => {
@@ -325,6 +302,27 @@ const _sfc_main$e = defineComponent({
       }
       return initAllProps.options.filter(funFilter);
     });
+    const keyUpList = (e) => {
+      const optionsLength = itemFilter.value.length;
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (activePosition.value === null) {
+          activePosition.value = optionsLength - 1;
+          return;
+        }
+        activePosition.value = activePosition.value - 1 >= 0 ? activePosition.value - 1 : optionsLength - 1;
+        return;
+      }
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (activePosition.value === null) {
+          activePosition.value = 0;
+          return;
+        }
+        activePosition.value = activePosition.value + 1 < optionsLength ? activePosition.value + 1 : 0;
+        return;
+      }
+    };
     const selectedItem = (e, item, group) => {
       if (item.disabled || group && group.disabled) {
         return;

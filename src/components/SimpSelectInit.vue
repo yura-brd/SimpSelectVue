@@ -20,23 +20,23 @@
   });
   // const model = ref<any>();
   const options = ref<any>([
-    {
-      name: "Выбрать",
-      value: "",
-      code: "",
-      disabled: true,
-      selected: true,
-    },
-    { value: "1", name: "First" },
-    { value: "2", name: "SeConD" },
-    { value: "3", name: "33" },
-    { value: "4", name: "44" },
-    { value: "5", name: "55" },
-    { value: "6", name: "66" },
-    { value: "7", name: "77" },
-    { value: "8", name: "88" },
-    { value: "9", name: "99" },
-    { value: "10", name: "10" },
+    // {
+    //   name: "Выбрать",
+    //   value: "",
+    //   code: "",
+    //   disabled: true,
+    //   selected: true,
+    // },
+    // { value: "1", name: "First" },
+    // { value: "2", name: "SeConD" },
+    // { value: "3", name: "33" },
+    // { value: "4", name: "44" },
+    // { value: "5", name: "55" },
+    // { value: "6", name: "66" },
+    // { value: "7", name: "77" },
+    // { value: "8", name: "88" },
+    // { value: "9", name: "99" },
+    // { value: "10", name: "10" },
   ]);
 
   const optionsCustomKeys = ref<any>([
@@ -53,7 +53,7 @@
       model.value = null;
     }
   });
-  const settingDisabled = ref(false);
+  const settingDisabled = ref(true);
   const setting_countShowSelected = ref(3);
   const isNative = ref(initIsMobile());
   const isFloat = ref(isFloatSet());

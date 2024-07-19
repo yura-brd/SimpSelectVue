@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { formatedStringToSearch, getClass, transformOptionWithGroup } from "@/library/simpSelect/simpSelect.utils";
+  import { formatedStringToSearch, getClass } from "@/library/simpSelect/simpSelect.utils";
   import { computed, type ComputedRef, inject, ref, watch } from "vue";
   import { keyInjectLocalStore, keyInjectPropsAll } from "@/library/simpSelect/simpSelect.keys";
   import type { ISimpleSelectOption, ISimpleSelectOptionGroup } from "../../simpSelect.types";
@@ -10,32 +10,11 @@
 
   const localStore = inject<ILocalStoreStore>(keyInjectLocalStore);
 
-  const localOptionItems = ref<ISimpleSelectOption[]>(transformOptionWithGroup(initAllProps!.options));
+  // const localOptionItems = ref<ISimpleSelectOption[]>(transformOptionWithGroup(initAllProps!.options));
 
   const activePosition = ref<number | null>(null);
   const itemsOption = ref<HTMLElement[]>([]);
 
-  const keyUpList = (e: KeyboardEvent) => {
-    const optionsLength = localOptionItems.value.length;
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      if (activePosition.value === null) {
-        activePosition.value = optionsLength - 1;
-        return;
-      }
-      activePosition.value = activePosition.value - 1 >= 0 ? activePosition.value - 1 : optionsLength - 1;
-      return;
-    }
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      if (activePosition.value === null) {
-        activePosition.value = 0;
-        return;
-      }
-      activePosition.value = activePosition.value + 1 < optionsLength ? activePosition.value + 1 : 0;
-      return;
-    }
-  };
   const keyUpListEnter = () => {
     if (activePosition.value === null) {
       activePosition.value = 0;
@@ -58,7 +37,6 @@
       if (!newVal) {
         activePosition.value = null;
       }
-      console.log("yura newVal", newVal);
     },
   );
 
@@ -99,6 +77,28 @@
     // filtering if NOT group
     return (initAllProps!.options as ISimpleSelectOption[]).filter(funFilter);
   });
+
+  const keyUpList = (e: KeyboardEvent) => {
+    const optionsLength = itemFilter.value.length;
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (activePosition.value === null) {
+        activePosition.value = optionsLength - 1;
+        return;
+      }
+      activePosition.value = activePosition.value - 1 >= 0 ? activePosition.value - 1 : optionsLength - 1;
+      return;
+    }
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (activePosition.value === null) {
+        activePosition.value = 0;
+        return;
+      }
+      activePosition.value = activePosition.value + 1 < optionsLength ? activePosition.value + 1 : 0;
+      return;
+    }
+  };
 
   const selectedItem = (e: Event, item: ISimpleSelectOption, group?: ISimpleSelectOptionGroup) => {
     if (item.disabled || (group && group.disabled)) {
