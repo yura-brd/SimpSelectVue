@@ -11,9 +11,22 @@
   };
   // const modelFull = ref();
 
-  const model = ref<any>({ value: "8", name: "88" });
+  const model = ref<any>({
+    name: "Выбрать",
+    value: "",
+    code: "",
+    disabled: true,
+    selected: true,
+  });
   // const model = ref<any>();
   const options = ref<any>([
+    {
+      name: "Выбрать",
+      value: "",
+      code: "",
+      disabled: true,
+      selected: true,
+    },
     { value: "1", name: "First" },
     { value: "2", name: "SeConD" },
     { value: "3", name: "33" },
@@ -162,6 +175,7 @@
     <div style="margin: 50px 0">
       <h2>Result</h2>
       <SimpSelect
+        ref="childComponent"
         v-model="model"
         :options="options"
         :disabled="settingDisabled"
@@ -170,7 +184,6 @@
         :is-float="isFloat"
         :multiple="settingMultiple"
         :is-search="isSearch"
-        ref="childComponent"
         :is-search-in-dropdown="isSearchInDropdown"
         :is-clone-title-to-search="isCloneTitleToSearch"
         :is-always-open="isAlwaysOpen"

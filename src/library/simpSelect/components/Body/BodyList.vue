@@ -18,6 +18,7 @@
   const keyUpList = (e: KeyboardEvent) => {
     const optionsLength = localOptionItems.value.length;
     if (e.key === "ArrowUp") {
+      e.preventDefault();
       if (activePosition.value === null) {
         activePosition.value = optionsLength - 1;
         return;
@@ -26,6 +27,7 @@
       return;
     }
     if (e.key === "ArrowDown") {
+      e.preventDefault();
       if (activePosition.value === null) {
         activePosition.value = 0;
         return;
@@ -50,7 +52,17 @@
     }
   });
 
-  const changeItemHandler = (e: any, item: ISimpleSelectOption) => {
+  watch(
+    () => localStore?.isLocalOpen.value,
+    newVal => {
+      if (!newVal) {
+        activePosition.value = null;
+      }
+      console.log("yura newVal", newVal);
+    },
+  );
+
+  const changeItemHandler = (e: unknown, item: ISimpleSelectOption) => {
     if (!initAllProps?.multiple) {
       localStore?.setIsLocalOpen(false);
     }
@@ -99,7 +111,12 @@
 </script>
 
 <template>
-  <ul :class="[getClass('list')]" :tabindex="0" @keydown="keyUpList" @keyup.enter="keyUpListEnter">
+  <ul
+    :class="[getClass('list')]"
+    :tabindex="localStore?.isLocalOpen.value ? 0 : -1"
+    @keydown="keyUpList"
+    @keyup.enter="keyUpListEnter"
+  >
     <template v-if="!itemFilter.length">
       <li :class="[initClass]">
         <component :is="localStore!.componentItemListItemEmpty" />
@@ -145,7 +162,6 @@
           @keyup.prevent.stop.enter="selectedItem($event, group as ISimpleSelectOption)"
           @click.prevent="selectedItem($event, group as ISimpleSelectOption)"
         >
-          <!-- <component :is="initAllProps.createComponentListItem" v-if="initAllProps" :item-option="item" />-->
           <component :is="localStore!.componentItemListItem" v-if="initAllProps" :item="group" />
         </li>
       </template>

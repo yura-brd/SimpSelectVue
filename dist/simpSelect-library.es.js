@@ -235,10 +235,11 @@ const _sfc_main$f = defineComponent({
     };
   }
 });
-const _hoisted_1$5 = { class: "SimpleSel__group_title" };
-const _hoisted_2$3 = { class: "SimpleSel__group" };
-const _hoisted_3$1 = ["tabindex", "data-sel-opt-checked", "onKeyup", "onClick"];
+const _hoisted_1$5 = ["tabindex"];
+const _hoisted_2$3 = { class: "SimpleSel__group_title" };
+const _hoisted_3$1 = { class: "SimpleSel__group" };
 const _hoisted_4$1 = ["tabindex", "data-sel-opt-checked", "onKeyup", "onClick"];
+const _hoisted_5 = ["tabindex", "data-sel-opt-checked", "onKeyup", "onClick"];
 const _sfc_main$e = defineComponent({
   __name: "BodyList",
   setup(__props) {
@@ -250,6 +251,7 @@ const _sfc_main$e = defineComponent({
     const keyUpList = (e) => {
       const optionsLength = localOptionItems.value.length;
       if (e.key === "ArrowUp") {
+        e.preventDefault();
         if (activePosition.value === null) {
           activePosition.value = optionsLength - 1;
           return;
@@ -258,6 +260,7 @@ const _sfc_main$e = defineComponent({
         return;
       }
       if (e.key === "ArrowDown") {
+        e.preventDefault();
         if (activePosition.value === null) {
           activePosition.value = 0;
           return;
@@ -280,6 +283,15 @@ const _sfc_main$e = defineComponent({
         cur.focus();
       }
     });
+    watch(
+      () => localStore == null ? void 0 : localStore.isLocalOpen.value,
+      (newVal) => {
+        if (!newVal) {
+          activePosition.value = null;
+        }
+        console.log("yura newVal", newVal);
+      }
+    );
     const changeItemHandler = (e, item) => {
       if (!(initAllProps == null ? void 0 : initAllProps.multiple)) {
         localStore == null ? void 0 : localStore.setIsLocalOpen(false);
@@ -321,9 +333,10 @@ const _sfc_main$e = defineComponent({
     };
     const initClass2 = getClass("group_items");
     return (_ctx, _cache) => {
+      var _a;
       return openBlock(), createElementBlock("ul", {
         class: normalizeClass([unref(getClass)("list")]),
-        tabindex: 0,
+        tabindex: ((_a = unref(localStore)) == null ? void 0 : _a.isLocalOpen.value) ? 0 : -1,
         onKeydown: keyUpList,
         onKeyup: withKeys(keyUpListEnter, ["enter"])
       }, [
@@ -333,23 +346,23 @@ const _sfc_main$e = defineComponent({
         }, [
           (openBlock(), createBlock(resolveDynamicComponent(unref(localStore).componentItemListItemEmpty)))
         ], 2)) : (openBlock(true), createElementBlock(Fragment, { key: 1 }, renderList(itemFilter.value, (group, index) => {
-          var _a, _b;
+          var _a2, _b;
           return openBlock(), createElementBlock(Fragment, { key: index }, [
             group.isOptgroupSelect ? (openBlock(), createElementBlock("li", {
               key: 0,
               class: normalizeClass([unref(initClass2)])
             }, [
-              createElementVNode("div", _hoisted_1$5, toDisplayString(group.label), 1),
-              createElementVNode("ul", _hoisted_2$3, [
+              createElementVNode("div", _hoisted_2$3, toDisplayString(group.label), 1),
+              createElementVNode("ul", _hoisted_3$1, [
                 (openBlock(true), createElementBlock(Fragment, null, renderList(group.items, (item, ind) => {
-                  var _a2, _b2;
+                  var _a3, _b2;
                   return openBlock(), createElementBlock("li", {
                     key: item.valueOf() + "_" + ind,
                     ref_for: true,
                     ref_key: "itemsOption",
                     ref: itemsOption,
                     tabindex: index === activePosition.value ? 0 : -1,
-                    "data-sel-opt-checked": ((_a2 = unref(localStore)) == null ? void 0 : _a2.getSelected(item)) ? "true" : "false",
+                    "data-sel-opt-checked": ((_a3 = unref(localStore)) == null ? void 0 : _a3.getSelected(item)) ? "true" : "false",
                     class: normalizeClass([
                       ["SimpleSel__list_item"],
                       {
@@ -364,7 +377,7 @@ const _sfc_main$e = defineComponent({
                       key: 0,
                       item
                     }, null, 8, ["item"])) : createCommentVNode("", true)
-                  ], 42, _hoisted_3$1);
+                  ], 42, _hoisted_4$1);
                 }), 128))
               ])
             ], 2)) : (openBlock(), createElementBlock("li", {
@@ -373,7 +386,7 @@ const _sfc_main$e = defineComponent({
               ref_key: "itemsOption",
               ref: itemsOption,
               tabindex: index === activePosition.value ? 0 : -1,
-              "data-sel-opt-checked": ((_a = unref(localStore)) == null ? void 0 : _a.getSelected(group)) ? "true" : "false",
+              "data-sel-opt-checked": ((_a2 = unref(localStore)) == null ? void 0 : _a2.getSelected(group)) ? "true" : "false",
               class: normalizeClass([
                 ["SimpleSel__list_item"],
                 {
@@ -388,10 +401,10 @@ const _sfc_main$e = defineComponent({
                 key: 0,
                 item: group
               }, null, 8, ["item"])) : createCommentVNode("", true)
-            ], 42, _hoisted_4$1))
+            ], 42, _hoisted_5))
           ], 64);
         }), 128))
-      ], 34);
+      ], 42, _hoisted_1$5);
     };
   }
 });

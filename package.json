@@ -9,9 +9,11 @@
     "vue 3",
     "select",
     "multiselect",
+    "vue multiselect",
+    "vue select",
     "select with search"
   ],
-  "version": "1.0.8",
+  "version": "1.0.9",
   "files": [
     "dist"
   ],
